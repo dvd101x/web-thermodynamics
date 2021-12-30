@@ -68,9 +68,9 @@ Q_h = mDot*(H[2]-H[3])
 "\nEvaporator heat in:"
 Q_c = mDot*(H[1]-H[4])
 
-"\nCOP(cooling)"
+"\nCOP(cooling):"
 evap_COP = Q_c/W_comp
-"\nCOP(heating)"
+"\nCOP(heating):"
 cond_COP = Q_h/W_comp
 ```
 Shall return
@@ -88,9 +88,9 @@ Shall return
 	Evaporator heat in:"
 44:	2.5499450889803 kW
 46:	"
-	COP(cooling)"
+	COP(cooling):"
 47:	2.5703206144801
 48:	"
-	COP(heating)"
+	COP(heating):"
 49:	3.5703206144801
-
+```
