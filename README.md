@@ -18,9 +18,9 @@ It loads with three example functions:
 * [List of extra functions](https://mathjs.org/docs/reference/functions.html)
 * [Syntax](https://mathjs.org/docs/expressions/syntax.html)
 
-# Extension
+# Advanced
 
-Te example provided is simple, but the capabilities are much more extense. For example it can be used to calculate complete thermodynamic cycles by using variables or arrays.
+Te example shown is simple, but the used libraries have many capabilities. For example it can be used to calculate complete thermodynamic cycles by using variables and arrays.
 
 ``` python
 # Vapor compression cycle
