@@ -35,5 +35,12 @@ Input.addEventListener("input", code => {
 
 mathWorker.onmessage = function (event) {
   const callback = JSON.parse(event.data);
-  Results.innerHTML = callback.result.join("<br>");
+  const lines = callback.lines;
+  const results = callback.result;
+
+  let tableRows = "";
+  lines.forEach((line,N) => {
+  tableRows += "<tr><td>"+line+":  </td><td>"+results[N].split("\n").join("<br>")+"</td></tr>"
+  });
+  Results.innerHTML = tableRows;
 };

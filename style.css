@@ -4,4 +4,11 @@
 
 #Results {
   display: inline;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#Results td:nth-child(1) {  
+  text-align:right;
+  vertical-align:top;
+  color: lightgray;
 }
