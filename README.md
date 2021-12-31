@@ -20,7 +20,7 @@ It loads with three example functions:
 
 # Advanced
 
-Te example shown is simple, but the used libraries have many capabilities. For example it can be used to calculate complete thermodynamic cycles by using variables and arrays.
+The example shown is simple, but uses libraries with many capabilities. For example it can be used to calculate complete thermodynamic cycles by using variables and arrays.
 
 ``` python
 # Vapor compression cycle
