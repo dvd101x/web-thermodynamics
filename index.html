@@ -7,15 +7,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solver</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.1/math.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.1/math.js"></script>
+    <script src="coolprop.js"></script>
+    <script src="fluidProperties.js"></script>
 </head>
+<style>
+    #Input {
+        display: inline;
+    }
+
+    #Results {
+        display: inline;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    #Results td:nth-child(1) {
+        text-align: right;
+        vertical-align: top;
+        color: lightgray;
+        margin-right: 1em;
+    }
+</style>
 
 <body>
     <h3>Input:</h3>
-    <textarea id="Input" rows="10" cols="80"></textarea>
+    <textarea id="Input" rows="10" cols="80"># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:
+props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')
+
+# Phase of Water at a pressure of 1 atmosphere and 0% Quality
+phase('P',1 atm,'Q',0%,'Water')
+
+# Enthalpy as a function of temperature, pressure and relative humidity at STP
+HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)</textarea>
     <h3>Results:</h3>
     <table id="Results"></table>
     <script src="script.js"></script>
 </body>
+
 </html>

@@ -1,46 +1,46 @@
 const Input = document.getElementById("Input")
 const Results = document.getElementById("Results")
 const wait = 200;
+const firstResponse = ["Type on the input to get results","Or not"]
 
-function insertExample() {
-  const CoolPropExample = [
-    "# Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:",
-    "props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')",
-    ,
-    "# Phase of Water at a pressure of 1 atmosphere and 0% Quality",
-    "phase('P',1 atm,'Q',0%,'Water')",
-    ,
-    "# Enthalpy as a function of temperature, pressure and relative humidity at STP",
-    "HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)"
-  ]
-  Input.value = CoolPropExample.join("\n")
+math.import({props, HAprops, phase})
+const parser = self.math.parser()
+
+function showResults(results){
+  let tableRows = "";
+  results.forEach((result,N) => {
+    if(result && result != "[]"){
+      let formattedResult = math.format(result,14);
+      tableRows += "<tr><td>"+(N+1)+":  </td><td>"+formattedResult.split("\n").join("<br>")+"</td></tr>"
+    }
+  });
+  Results.innerHTML = tableRows;
 }
 
-var mathWorker = new Worker("mathWorker.js");
+function doMath(expressions){
+  let results = []
 
+  parser.clear()
+  expressions.forEach(expression => {
+    try {
+      output = parser.evaluate(expression);
+    } catch (error) {
+      output = error;
+    }
+    results.push(output)
+  })
+  return results
+}
 
 function sendMath(){
-  const expressions = Input.value.split("\n");
-  const request = {expr: expressions}
-  mathWorker.postMessage(JSON.stringify(request))
+  const expressoins = Input.value.split("\n")
+  showResults(doMath(expressoins))
 }
 
-insertExample()
+showResults(firstResponse)
 
 var timer;
 Input.addEventListener("input", code => {
   clearTimeout(timer);
   timer = setTimeout(sendMath, wait, code);
 })
-
-mathWorker.onmessage = function (event) {
-  const callback = JSON.parse(event.data);
-  const lines = callback.lines;
-  const results = callback.result;
-
-  let tableRows = "";
-  lines.forEach((line,N) => {
-  tableRows += "<tr><td>"+line+":  </td><td>"+results[N].split("\n").join("<br>")+"</td></tr>"
-  });
-  Results.innerHTML = tableRows;
-};
