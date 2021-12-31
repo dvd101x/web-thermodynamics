@@ -1,14 +1,14 @@
 #Input {
-  display: inline;
+    display: inline;
 }
 
 #Results {
-  display: inline;
-  font-family: 'Courier New', Courier, monospace;
+    display: inline;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 #Results td:nth-child(1) {  
-  text-align:right;
-  vertical-align:top;
-  color: lightgray;
+    text-align:right;
+    vertical-align:top;
+    color: lightgray;
 }

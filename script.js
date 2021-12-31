@@ -1,7 +1,7 @@
 const Input = document.getElementById("Input")
 const Results = document.getElementById("Results")
 const wait = 200;
-const firstResponse = ["Type on the input to get results","Or not"]
+const firstResponse = ["Type on the input to get results"]
 
 math.import({props, HAprops, phase})
 const parser = self.math.parser()
