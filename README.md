@@ -11,10 +11,10 @@ It loads with three example functions:
 
 # References
 
-* [Example of fluid properties function](http://coolprop.sourceforge.net/coolprop/HighLevelAPI.html#high-level-api)
+* [Example of fluid properties function **props** and **phase**](http://coolprop.sourceforge.net/coolprop/HighLevelAPI.html#high-level-api)
 * [List of fluids](http://coolprop.sourceforge.net/fluid_properties/PurePseudoPure.html#list-of-fluids)
 * [List of fluid properties](http://www.coolprop.org/coolprop/HighLevelAPI.html#table-of-string-inputs-to-propssi-function)
-* [Example of psychrometric function](http://coolprop.sourceforge.net/fluid_properties/HumidAir.html#sample-hapropssi-code)
+* [Example of psychrometric function **HAprops**](http://coolprop.sourceforge.net/fluid_properties/HumidAir.html#sample-hapropssi-code)
 * [List of psychometric properties](http://coolprop.sourceforge.net/fluid_properties/HumidAir.html#table-of-inputs-outputs-to-hapropssi)
 * [List of units](https://mathjs.org/docs/datatypes/units.html#reference)
 * [List of extra functions](https://mathjs.org/docs/reference/functions.html)
