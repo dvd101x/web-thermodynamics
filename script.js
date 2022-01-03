@@ -7,7 +7,7 @@ math.import({props, HAprops, phase})
 const parser = self.math.parser()
 
 function showResults(results){
-  Results.value = results.filter(result => result && result !="[]").join("\n");
+  Results.value = results.filter(result => result && result !="[]" && result != "undefined").join("\n");
 }
 
 function doMath(expressions){
