@@ -16,7 +16,7 @@ function doMath(expressions){
   parser.clear()
   expressions.forEach(expression => {
     try {
-      output = parser.evaluate(expression);
+      output = math.format(parser.evaluate(expression),14);
     } catch (error) {
       output = error;
     }
