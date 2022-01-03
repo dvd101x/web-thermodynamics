@@ -29,9 +29,9 @@ The example shown is simple, but uses libraries with many capabilities. For exam
 fluid = 'R134a'
 mDot = 1 kg/minute
 
-evap = {T: -20 degC, P_drop :0 Pa, superHeating : 10 K};
-cond = {T: 40 degC, P_drop: 0 Pa, subCooling : 10 K};
-etaS = 0.75;
+evap = {T: -20 degC, P_drop :0 Pa, superHeating : 10 K}
+cond = {T: 40 degC, P_drop: 0 Pa, subCooling : 10 K}
+etaS = 0.75
 
 T = [];P = [];D = [];H = [];S = [];
 
@@ -62,14 +62,18 @@ P[4] = P[1]-evap.P_drop;
 T[4] = props('T','P',P[4],'H',H[4],fluid);
 D[4] = props('D','P',P[4],'H',H[4],fluid);
 S[4] = props('S','P',P[4],'H',H[4],fluid);
+# Work and Energy
+W_comp = mDot*(H[2]-H[1]);
+Q_h = mDot*(H[2]-H[3]);
+Q_c = mDot*(H[1]-H[4]);
 
-"Compressor's work:"
-W_comp = mDot*(H[2]-H[1])
+# Display results
+"Compressor power:"
+W_comp to [W, BTU/h]
 "Condenser heat out:"
-Q_h = mDot*(H[2]-H[3])
+Q_h to [W, BTU/h]
 "Evaporator heat in:"
-Q_c = mDot*(H[1]-H[4])
-
+Q_c to [W, BTU/h]
 "COP(cooling):"
 evap_COP = Q_c/W_comp
 "COP(heating):"
@@ -80,12 +84,15 @@ Shall return
 ``` javascript
 "R134a"
 1 kg / minute
-"Compressor's work:"
-992.07276890481 W
+{"T": -20 degC, "P_drop": 0 Pa, "superHeating": 10 K}
+{"T": 40 degC, "P_drop": 0 Pa, "subCooling": 10 K}
+0.75
+"Compressor power:"
+[992.07276890481 W, 3385.0927978726 BTU / h]
 "Condenser heat out:"
-3.5420178578852 kW
+[3542.0178578852 W, 12085.866598173 BTU / h]
 "Evaporator heat in:"
-2.5499450889803 kW
+[2549.9450889803 W, 8700.7738003 BTU / h]
 "COP(cooling):"
 2.5703206144801
 "COP(heating):"
