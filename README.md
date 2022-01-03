@@ -63,36 +63,31 @@ T[4] = props('T','P',P[4],'H',H[4],fluid);
 D[4] = props('D','P',P[4],'H',H[4],fluid);
 S[4] = props('S','P',P[4],'H',H[4],fluid);
 
-"\nCompressor's work:"
+"Compressor's work:"
 W_comp = mDot*(H[2]-H[1])
-"\nCondenser heat out:"
+"Condenser heat out:"
 Q_h = mDot*(H[2]-H[3])
-"\nEvaporator heat in:"
+"Evaporator heat in:"
 Q_c = mDot*(H[1]-H[4])
 
-"\nCOP(cooling):"
+"COP(cooling):"
 evap_COP = Q_c/W_comp
-"\nCOP(heating):"
+"COP(heating):"
 cond_COP = Q_h/W_comp
 ```
 Shall return
 
 ``` javascript
-2:	"R134a"
-3:	1 kg / minute
-39:	"
-	Compressor's work:"
-40:	992.07276890481 W
-41:	"
-	Condenser heat out:"
-42:	3.5420178578852 kW
-43:	"
-	Evaporator heat in:"
-44:	2.5499450889803 kW
-46:	"
-	COP(cooling):"
-47:	2.5703206144801
-48:	"
-	COP(heating):"
-49:	3.5703206144801
+"R134a"
+1 kg / minute
+"Compressor's work:"
+992.07276890481 W
+"Condenser heat out:"
+3.5420178578852 kW
+"Evaporator heat in:"
+2.5499450889803 kW
+"COP(cooling):"
+2.5703206144801
+"COP(heating):"
+3.5703206144801
 ```
