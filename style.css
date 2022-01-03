@@ -20,6 +20,7 @@ textarea{
     border-radius: 1em 1em 0 0;
     border:0;
     margin-bottom: 0;
+    z-index:1;
 }
 
 #Results {
