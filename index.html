@@ -12,6 +12,7 @@
     <script src="fluidProperties.js"></script>
 </head>
 <body>
+<fieldset id="container">
     <textarea id="Input" autofocus># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:
 props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')
 
@@ -22,5 +23,6 @@ phase('P',1 atm,'Q',0%,'Water')
 HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)</textarea>
     <textarea id="Results" readonly>Type on the input to get results</textarea>
     <script src="script.js"></script>
+</fieldset>
 </body>
 </html>
