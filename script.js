@@ -26,8 +26,8 @@ function doMath(expressions){
 }
 
 function sendMath(){
-  const expressoins = Input.value.split("\n")
-  showResults(doMath(expressoins))
+  const expressions = Input.value.split("\n")
+  showResults(doMath(expressions))
 }
 
 var timer;
