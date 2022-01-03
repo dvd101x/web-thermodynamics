@@ -12,8 +12,7 @@
     <script src="fluidProperties.js"></script>
 </head>
 <body>
-    <h3>Input:</h3>
-    <textarea id="Input" rows="10" cols="80" autofocus># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:
+    <textarea id="Input" autofocus># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:
 props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')
 
 # Phase of Water at a pressure of 1 atmosphere and 0% Quality
@@ -21,8 +20,7 @@ phase('P',1 atm,'Q',0%,'Water')
 
 # Enthalpy as a function of temperature, pressure and relative humidity at STP
 HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)</textarea>
-    <h3>Results:</h3>
-    <table id="Results"></table>
+    <textarea id="Results" readonly>Type on the input to get results</textarea>
     <script src="script.js"></script>
 </body>
 </html>

@@ -7,14 +7,7 @@ math.import({props, HAprops, phase})
 const parser = self.math.parser()
 
 function showResults(results){
-  let tableRows = "";
-  results.forEach((result,N) => {
-    if(result && result != "[]"){
-      let formattedResult = math.format(result,14);
-      tableRows += "<tr><td>"+(N+1)+":  </td><td>"+formattedResult.split("\n").join("<br>")+"</td></tr>"
-    }
-  });
-  Results.innerHTML = tableRows;
+  Results.value = results.filter(result => result && result !="[]").join("\n");
 }
 
 function doMath(expressions){
@@ -36,8 +29,6 @@ function sendMath(){
   const expressoins = Input.value.split("\n")
   showResults(doMath(expressoins))
 }
-
-showResults(firstResponse)
 
 var timer;
 Input.addEventListener("input", code => {
