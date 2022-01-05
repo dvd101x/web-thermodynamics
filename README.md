@@ -147,7 +147,7 @@ Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engine
 * Saves in the browser (you can continue where you left off)
 * 9 workspaces, so you can try different things
 * The interface doesn't freeze during big calculaitons (uses a webworker)
-* A few more examples focused on mathjs it's many features
+* A few more examples focused on the many features of mathjs
 
 # References
 
