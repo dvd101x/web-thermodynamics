@@ -20,9 +20,45 @@ It loads with three example functions:
 * [List of extra functions](https://mathjs.org/docs/reference/functions.html)
 * [Syntax](https://mathjs.org/docs/expressions/syntax.html)
 
+# Intermediate
+
+This demo uses libraries with many capabilities. There are many conversions available for inputs and ouputs and the results can be stored on variables, arrays and objects to be used later.
+
+``` python
+# Density of carbon dioxide at 100 bar and 25C in lbm/in^3
+rho = props('D', 'T', 25 degC, 'P', 100 bar, 'CO2') in lbm/in^3
+
+# Saturated vapor enthalpy [J/kg] of R134a at 25C
+enthalpy = props('H', 'T', 25 celsius, 'Q', 100%, 'R134a')
+
+# Enthalpy (J per kg dry air) as a function of temperature, pressure,
+#    and relative humidity at STP
+enthalpyDry = HAprops('H','T',298.15 K,'P',101325 Pa,'R',0.5)
+
+# Create an empty array inside an object
+cycle = {Temp:[]};
+
+# Temperature of saturated air at the previous enthalpy
+cycle.Temp[1] = HAprops('T','P',1 atm,'H',enthalpyDry,'R',1.0)
+
+# Temperature of saturated air in farenheit
+cycle.Temp[2] = HAprops('T','H',enthalpyDry,'R',1.0,'P',1 atm) to degF
+
+cycle.Temp to degC
+```
+Shall return:
+```javascript
+0.029538663149234 lbm / in^3
+4.1233395323187e+5 J / kg
+50423.450391029 J / kg
+290.96209246917 K
+64.0617664445 degF
+[17.812092469167 degC, 17.812092469167 degC]
+```
+
 # Advanced
 
-The example shown is simple, but uses libraries with many capabilities. For example it can be used to calculate complete thermodynamic cycles by using variables, arrays and objects.
+These concepts can be used to calculate complete thermodyinamic cycles.
 
 ``` python
 # Vapor compression cycle
@@ -33,39 +69,40 @@ evap = {T: -20 degC, P_drop :0 Pa, superHeating : 10 K}
 cond = {T: 40 degC, P_drop: 0 Pa, subCooling : 10 K}
 etaS = 0.75
 
+cycle = {T:[], P:[], D:[], H:[], S:[]};
 T = [];P = [];D = [];H = [];S = [];
 
 P_low = props('P','T',evap.T,'Q',1,fluid);
 # Step 1 Between evaporator and compressor
-P[1] = P_low;
-T[1] = evap.T+ evap.superHeating;
-D[1] = props('D','T',T[1],'P',P[1],fluid);
-H[1] = props('H','T',T[1],'P',P[1],fluid);
-S[1] = props('S','T',T[1],'P',P[1],fluid);
+cycle.P[1] = P_low;
+cycle.T[1] = evap.T+ evap.superHeating;
+cycle.D[1] = props('D','T',cycle.T[1],'P',cycle.P[1],fluid);
+cycle.H[1] = props('H','T',cycle.T[1],'P',cycle.P[1],fluid);
+cycle.S[1] = props('S','T',cycle.T[1],'P',cycle.P[1],fluid);
 p_High = props('P','T',cond.T, 'Q',0,fluid);
 # Step 2 Between compressor and condenser
-P[2] = p_High;
-H_i = props('H','P',P[2],'S',S[1],fluid);
-H[2] = (H_i-H[1])/etaS + H[1];
-T[2] = props('T','P',P[2],'H',H[2],fluid);
-D[2] = props('D','P',P[2],'H',H[2],fluid);
-S[2] = props('S','P',P[2],'H',H[2],fluid);
+cycle.P[2] = p_High;
+H_i = props('H','P',cycle.P[2],'S',cycle.S[1],fluid);
+cycle.H[2] = (H_i-cycle.H[1])/etaS + cycle.H[1];
+cycle.T[2] = props('T','P',cycle.P[2],'H',cycle.H[2],fluid);
+cycle.D[2] = props('D','P',cycle.P[2],'H',cycle.H[2],fluid);
+cycle.S[2] = props('S','P',cycle.P[2],'H',cycle.H[2],fluid);
 # Step 3 Between condenser and expansion
-P[3] = P[2]-cond.P_drop;
-T[3] = cond.T-cond.subCooling;
-D[3] = props('D','P',P[3],'T',T[3],fluid);
-H[3] = props('H','P',P[3],'T',T[3],fluid);
-S[3] = props('S','P',P[3],'T',T[3],fluid);
+cycle.P[3] = cycle.P[2]-cond.P_drop;
+cycle.T[3] = cond.T-cond.subCooling;
+cycle.D[3] = props('D','P',cycle.P[3],'T',cycle.T[3],fluid);
+cycle.H[3] = props('H','P',cycle.P[3],'T',cycle.T[3],fluid);
+cycle.S[3] = props('S','P',cycle.P[3],'T',cycle.T[3],fluid);
 # Step 4 Between expansion and evaporation
-H[4] = H[3];
-P[4] = P[1]-evap.P_drop;
-T[4] = props('T','P',P[4],'H',H[4],fluid);
-D[4] = props('D','P',P[4],'H',H[4],fluid);
-S[4] = props('S','P',P[4],'H',H[4],fluid);
+cycle.H[4] = cycle.H[3];
+cycle.P[4] = cycle.P[1]-evap.P_drop;
+cycle.T[4] = props('T','P',cycle.P[4],'H',cycle.H[4],fluid);
+cycle.D[4] = props('D','P',cycle.P[4],'H',cycle.H[4],fluid);
+cycle.S[4] = props('S','P',cycle.P[4],'H',cycle.H[4],fluid);
 # Work and Energy
-W_comp = mDot*(H[2]-H[1]);
-Q_h = mDot*(H[2]-H[3]);
-Q_c = mDot*(H[1]-H[4]);
+W_comp = mDot*(cycle.H[2]-cycle.H[1]);
+Q_h = mDot*(cycle.H[2]-cycle.H[3]);
+Q_c = mDot*(cycle.H[1]-cycle.H[4]);
 
 # Display results
 "Compressor power:"
@@ -82,6 +119,7 @@ cond_COP = Q_h/W_comp
 Shall return
 
 ``` javascript
+ 
 "R134a"
 1 kg / minute
 {"T": -20 degC, "P_drop": 0 Pa, "superHeating": 10 K}
