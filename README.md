@@ -121,7 +121,6 @@ cond_COP = Q_h/W_comp
 Shall return:
 
 ``` javascript
- 
 "R134a"
 1 kg / minute
 {"T": -20 degC, "P_drop": 0 Pa, "superHeating": 10 K}
