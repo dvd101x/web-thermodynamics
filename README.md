@@ -139,6 +139,16 @@ Shall return:
 3.5703206144801
 ```
 
+# Additional features
+
+Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engineering-Solver) that includes additional features:
+
+* Text editor with syntax highlighting, find and replace, closing parenthesis, etc.
+* Saves in the browser (you can continue where you left off)
+* 9 workspaces, so you can try different things
+* The interface doesn't freeze during big calculaitons (uses a webworker)
+* A few more examples focused on mathjs it's many features
+
 # References
 
 * [Example of fluid properties function **props** and **phase**](http://coolprop.sourceforge.net/coolprop/HighLevelAPI.html#high-level-api)
