@@ -6,29 +6,29 @@ body {
     background-color: lightgray;
     min-height: 100%;
     display: flex;
-    flex-direction: column;
-    border:0;   
+    flex-direction: row;
+    border: 0;   
     margin: 0;       
 }
 textarea{
-    padding:1em;
-    margin:1em;
+    padding: 1em;
+    margin: 1em;
     font-family: 'Courier New', Courier, monospace;
 }
 #Input {
     flex: 2;
     resize: none;
-    border-radius: 1em 1em 0 0;
-    border:0;
-    margin-bottom: 0;
-    z-index:1;
+    border-radius: 1em 0 0 1em;
+    border: 0;
+    margin-right: 0;
+    z-index: 1;
 }
 
 #Results {
     flex: 1;
     resize: none;
     background-color: #f5f5f5;
-    border-radius: 0 0 1em 1em;
-    border:0;
-    margin-top:0;
+    border-radius: 0 1em 1em 0;
+    border: 0;
+    margin-left: 0;
 }
