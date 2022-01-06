@@ -51,7 +51,62 @@ Shall return:
 [17.812092469167 degC, 17.812092469167 degC]
 ```
 
-# Advanced example
+# Advanced examples
+
+It can solve many other problems based con [CoolProp High Level API documentation](http://www.coolprop.org/coolprop/HighLevelAPI.html#high-level-api):
+
+```python
+# Saturation temperature of Water at 1 atm in K
+props('T','P',101325 Pa,'Q',0,'Water')
+
+# Saturated vapor enthalpy of Water at 1 atm in J/kg
+H_V = props('H','P',101325 Pa,'Q',1,'Water')
+
+# Saturated liquid enthalpy of Water at 1 atm in J/kg
+H_L = props('H','P',101325 Pa,'Q',0,'Water')
+
+# Latent heat of vaporization of Water at 1 atm in J/kg
+H_V - H_L
+
+# Get the density of Water at T = 461.1 K and P = 5.0e6 Pa, imposing the liquid phase
+props('D','T|liquid',461.1 K,'P',5e6 Pa,'Water')
+
+# Get the density of Water at T = 597.9 K and P = 5.0e6 Pa, imposing the gas phase
+props('D','T',597.9 K,'P|gas',5e6 Pa,'Water')
+
+# You can call the props function directly using dummy arguments for the other unused parameters:
+props("Tcrit","",0,"",0,"Water")
+
+# It can be useful to know what the phase of a given state point is
+phase('P',101325 Pa,'Q',0,'Water')
+
+# The phase index (as floating point number) can also be obtained using the props function:
+props('Phase','P',101325 Pa,'Q',0,'Water')
+
+# c_p using c_p
+props('C','P',101325 Pa,'T',300 K,'Water')
+
+# c_p using derivate
+props('d(Hmass)/d(T)|P','P',101325 Pa,'T',300 K,'Water')
+
+# c_p using second partial derivative
+props('d(d(Hmass)/d(T)|P)/d(Hmass)|P','P',101325 Pa,'T',300 K,'Water')
+```
+Shall return
+```javascript
+373.12429584768 K
+2.6755293255007e+6 J / kg
+4.1905773309408e+5 J / kg
+2.2564715924067e+6 J / kg
+881.00085333474 kg / m^3
+20.50849607058 kg / m^3
+647.096 K
+"twophase"
+6
+4180.6357765552 J / (kg K)
+4180.6357765552 J / (kg K)
+-7.7679894680327e-5 (J kg) / (kg K J)
+```
 
 These concepts can be used to calculate complete thermodyinamic cycles.
 
