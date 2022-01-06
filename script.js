@@ -2,29 +2,26 @@ const Input = document.getElementById("Input")
 const Results = document.getElementById("Results")
 const wait = 200;
 
-math.import({props, HAprops, phase})
+math.import({ props, HAprops, phase })
 const parser = self.math.parser()
 
-function showResults(results){
-  Results.value = results.filter(result => result && result !="[]" && result != "undefined").join("\n");
+function showResults(results) {
+  Results.value = results.filter(res => res && res != "[]" && res != "undefined").join("\n");
 }
 
-function doMath(expressions){
-  let results = []
-
+function doMath(expressions) {
   parser.clear()
-  expressions.forEach(expression => {
+  return expressions.map(ex => {
     try {
-      output = math.format(parser.evaluate(expression),14);
-    } catch (error) {
-      output = error;
+      return math.format(parser.evaluate(ex), 14)
+    } catch (e) {
+      return e.toString()
     }
-    results.push(output)
-  })
-  return results
+  }
+  )
 }
 
-function sendMath(){
+function sendMath() {
   const expressions = Input.value.split("\n")
   showResults(doMath(expressions))
 }
