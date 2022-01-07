@@ -21,7 +21,7 @@ editor.on("change", code => {
 var results = ace.edit("result");
 results.setOptions({
   showGutter: false,
-  theme: "ace/theme/chrome",
+  theme: "ace/theme/iplastic",
   mode: "ace/mode/javascript",
   readOnly: true,
 })
