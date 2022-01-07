@@ -9,18 +9,19 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.0.1/math.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/coolporp@1.0.0/coolprop.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13/ace.js"></script>
     <script src="fluidProperties.js"></script>
 </head>
 <body>
-<textarea id="Input" autofocus># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere:
+<div id="editor"># Density of Nitrogen at a temperature 25 °C and a pressure 1 atmosphere
 props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')
 
 # Phase of Water at a pressure of 1 atmosphere and 0% Quality
-phase('P',1 atm,'Q',0%,'Water')
+phase('P', 1 atm, 'Q', 0 %, 'Water')
 
 # Enthalpy as a function of temperature, pressure and relative humidity at STP
-HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)</textarea>
-<textarea id="Results" readonly>Type on the input to get results</textarea>
+HAprops('H', 'T', 25 degC, 'P', 1 atm, 'R', 50 %)</div>
+<div id="result">"Type on the input to get results"</div>
 <script src="script.js"></script>
 </body>
 </html>
