@@ -26,10 +26,6 @@ results.setOptions({
   readOnly: true,
 })
 
-function showResults(results) {
-  Results.value = results.filter(res => res && res != "[]" && res != "undefined").join("\n");
-}
-
 function doMath(expressions) {
   parser.clear()
   return expressions.map(ex => {
