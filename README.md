@@ -26,18 +26,18 @@ rho = props('D', 'T', 25 degC, 'P', 100 bar, 'CO2') in lbm/in^3
 # Saturated vapor enthalpy [J/kg] of R134a at 25C
 enthalpy = props('H', 'T', 25 celsius, 'Q', 100%, 'R134a')
 
-# Enthalpy (J per kg dry air) as a function of temperature, pressure,
+# Enthalpy (J per kg dry air) as a function of temperature, pressure, 
 #    and relative humidity at STP
-enthalpyDry = HAprops('H','T',298.15 K,'P',101325 Pa,'R',0.5)
+enthalpyDry = HAprops('H', 'T', 298.15 K, 'P', 101325 Pa, 'R', 0.5)
 
 # Create an empty array inside an object
 cycle = {Temp:[]};
 
 # Temperature of saturated air at the previous enthalpy
-cycle.Temp[1] = HAprops('T','P',1 atm,'H',enthalpyDry,'R',1.0)
+cycle.Temp[1] = HAprops('T', 'P', 1 atm, 'H', enthalpyDry, 'R', 1.0)
 
 # Temperature of saturated air in farenheit
-cycle.Temp[2] = HAprops('T','H',enthalpyDry,'R',1.0,'P',1 atm) to degF
+cycle.Temp[2] = HAprops('T', 'H', enthalpyDry, 'R', 1.0, 'P', 1 atm) to degF
 
 cycle.Temp to degC
 ```
@@ -57,40 +57,40 @@ It can solve many other problems based con [CoolProp High Level API documentatio
 
 ```python
 # Saturation temperature of Water at 1 atm in K
-props('T','P',101325 Pa,'Q',0,'Water')
+props('T', 'P', 101325 Pa, 'Q', 0, 'Water')
 
 # Saturated vapor enthalpy of Water at 1 atm in J/kg
-H_V = props('H','P',101325 Pa,'Q',1,'Water')
+H_V = props('H', 'P', 101325 Pa, 'Q', 1, 'Water')
 
 # Saturated liquid enthalpy of Water at 1 atm in J/kg
-H_L = props('H','P',101325 Pa,'Q',0,'Water')
+H_L = props('H', 'P', 101325 Pa, 'Q', 0, 'Water')
 
 # Latent heat of vaporization of Water at 1 atm in J/kg
 H_V - H_L
 
 # Get the density of Water at T = 461.1 K and P = 5.0e6 Pa, imposing the liquid phase
-props('D','T|liquid',461.1 K,'P',5e6 Pa,'Water')
+props('D', 'T|liquid', 461.1 K, 'P', 5e6 Pa, 'Water')
 
 # Get the density of Water at T = 597.9 K and P = 5.0e6 Pa, imposing the gas phase
-props('D','T',597.9 K,'P|gas',5e6 Pa,'Water')
+props('D', 'T', 597.9 K, 'P|gas', 5e6 Pa, 'Water')
 
 # You can call the props function directly using dummy arguments for the other unused parameters:
-props("Tcrit","",0,"",0,"Water")
+props("Tcrit", "", 0, "", 0, "Water")
 
 # It can be useful to know what the phase of a given state point is
-phase('P',101325 Pa,'Q',0,'Water')
+phase('P', 101325 Pa, 'Q', 0, 'Water')
 
 # The phase index (as floating point number) can also be obtained using the props function:
-props('Phase','P',101325 Pa,'Q',0,'Water')
+props('Phase', 'P', 101325 Pa, 'Q', 0, 'Water')
 
 # c_p using c_p
-props('C','P',101325 Pa,'T',300 K,'Water')
+props('C', 'P', 101325 Pa, 'T', 300 K, 'Water')
 
 # c_p using derivate
-props('d(Hmass)/d(T)|P','P',101325 Pa,'T',300 K,'Water')
+props('d(Hmass)/d(T)|P', 'P', 101325 Pa, 'T', 300 K, 'Water')
 
 # c_p using second partial derivative
-props('d(d(Hmass)/d(T)|P)/d(Hmass)|P','P',101325 Pa,'T',300 K,'Water')
+props('d(d(Hmass)/d(T)|P)/d(Hmass)|P', 'P', 101325 Pa, 'T', 300 K, 'Water')
 ```
 Shall return
 ```javascript
