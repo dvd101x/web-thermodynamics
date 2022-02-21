@@ -124,18 +124,18 @@ etaS = 0.75
 cycle = {T:[], P:[], D:[], H:[], S:[]};
 
 # Define low and high pressure
-P_low  = props('P', 'T', evap.T, 'Q', 1, fluid);
-p_High = props('P', 'T', cond.T, 'Q', 0, fluid);
+pLow  = props('P', 'T', evap.T, 'Q', 1, fluid);
+pHigh = props('P', 'T', cond.T, 'Q', 0, fluid);
 
 # 4 to 1 Evaporation
-cycle.P[1] = P_low;
+cycle.P[1] = pLow;
 cycle.T[1] = evap.T+ evap.superHeating;
 cycle.D[1] = props('D', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
 cycle.H[1] = props('H', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
 cycle.S[1] = props('S', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
 
 # 1 to 2 Compression of vapor
-cycle.P[2] = p_High;
+cycle.P[2] = pHigh;
 H_i        = props('H', 'P', cycle.P[2], 'S', cycle.S[1], fluid);
 cycle.H[2] = (H_i-cycle.H[1])/etaS + cycle.H[1];
 cycle.T[2] = props('T', 'P', cycle.P[2], 'H', cycle.H[2], fluid);
