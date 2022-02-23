@@ -3,7 +3,7 @@ const wait = 200;
 math.import({ props, HAprops, phase })
 const parser = self.math.parser()
 
-ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.13')
+ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14')
 
 var timer;
 var editor = ace.edit("editor");
