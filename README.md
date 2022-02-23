@@ -113,11 +113,11 @@ These concepts can be used to calculate complete thermodyinamic cycles.
 ``` python
 # Vapor compression cycle
 fluid = 'R134a'
-mDot = 1 kg/minute
+mDot  = 1 kg/minute
 
-evap = {T: -20 degC, P_drop: 0 Pa, superHeating: 10 K}
-cond = {T:  40 degC, P_drop: 0 Pa, subCooling  : 10 K}
-etaS = 0.75
+evap  = {T: -20 degC, P_drop: 0 Pa, superHeating: 10 K}
+cond  = {T:  40 degC, P_drop: 0 Pa, subCooling  : 10 K}
+etaS  = 0.75
 
 # Store empty arrays for Temperature, Pressure, Density, Enthalpy and Entropy
 # Inside an object called cycle
