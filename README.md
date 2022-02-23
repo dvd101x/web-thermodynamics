@@ -168,8 +168,8 @@ cond_COP = Q_h/W_comp;
 print("Compressor power   : $0, $1", W_comp to [W, BTU/h], 4)
 print("Condenser heat out : $0, $1", Q_h    to [W, BTU/h], 4)
 print("Evaporator heat in : $0, $1", Q_c    to [W, BTU/h], 4)
-print("COP(cooling)       : $0", [evap_COP], 5)
-print("COP(heating)       : $0", [cond_COP], 5)
+print("COP(cooling)       : $0", [evap_COP], 3)
+print("COP(heating)       : $0", [cond_COP], 3)
 ```
 Shall return:
 
@@ -182,8 +182,8 @@ Shall return:
 "Compressor power   : 992.1 W, 3385 BTU / h"
 "Condenser heat out : 3542 W, 12090 BTU / h"
 "Evaporator heat in : 2550 W, 8701 BTU / h"
-"COP(cooling)       : 2.5703"
-"COP(heating)       : 3.5703"
+"COP(cooling)       : 2.57"
+"COP(heating)       : 3.57"
 ```
 
 # Additional features
