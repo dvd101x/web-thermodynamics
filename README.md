@@ -124,8 +124,8 @@ etaS = 0.75
 cycle = {T:[], P:[], D:[], H:[], S:[]};
 
 # Define low and high pressure
-pLow  = props('P', 'T', evap.T, 'Q', 1, fluid);
-pHigh = props('P', 'T', cond.T, 'Q', 0, fluid);
+pLow  = props('P', 'T', evap.T, 'Q', 100%, fluid);
+pHigh = props('P', 'T', cond.T, 'Q', 0%  , fluid);
 
 # 4 to 1 Evaporation
 cycle.P[1] = pLow;
@@ -156,10 +156,10 @@ cycle.T[4] = props('T', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
 cycle.D[4] = props('D', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
 cycle.S[4] = props('S', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
 
-# Work and Energy
-W_comp = mDot*(cycle.H[2] - cycle.H[1]);
-Q_h    = mDot*(cycle.H[2] - cycle.H[3]);
-Q_c    = mDot*(cycle.H[1] - cycle.H[4]);
+# Work, Energy and Performance
+W_comp   = mDot*(cycle.H[2] - cycle.H[1]);
+Q_h      = mDot*(cycle.H[2] - cycle.H[3]);
+Q_c      = mDot*(cycle.H[1] - cycle.H[4]);
 evap_COP = Q_c/W_comp;
 cond_COP = Q_h/W_comp;
 
