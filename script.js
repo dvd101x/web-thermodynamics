@@ -30,7 +30,10 @@ function doMath(expressions) {
   parser.clear()
   return expressions.map(ex => {
     try {
-      return math.format(parser.evaluate(ex), 14)
+      let result = parser.evaluate(ex)
+      if (typeof result != 'string')
+        {result = math.format(result,14)}
+      return result
     } catch (e) {
       return e.toString()
     }
