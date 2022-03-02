@@ -1,4 +1,4 @@
-const wait = 200;
+const wait = 500;
 
 math.import({ props, HAprops, phase })
 const parser = self.math.parser()
