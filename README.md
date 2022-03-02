@@ -165,9 +165,9 @@ cond_COP = Q_h/W_comp;
 
 # Display results
 
-print('Compressor power   : $0 \t$1', W_comp to [W, BTU/h], 4)
-print('Condenser heat out : $0 \t$1', Q_h    to [W, BTU/h], 4)
-print('Evaporator heat in : $0 \t$1', Q_c    to [W, BTU/h], 4)
+print('Compressor power   : $0 \t$1\t$2', W_comp to [W, BTU/h, TR], 4)
+print('Condenser heat out : $0 \t$1\t$2', Q_h    to [W, BTU/h, TR], 4)
+print('Evaporator heat in : $0 \t$1\t$2', Q_c    to [W, BTU/h, TR], 4)
 
 print('COP(cooling)       : $0', [evap_COP], 3)
 print('COP(heating)       : $0', [cond_COP], 3)
@@ -180,9 +180,9 @@ R134a
 {"T": -20 degC, "P_drop": 0 Pa, "superHeating": 10 K}
 {"T": 40 degC, "P_drop": 0 Pa, "subCooling": 10 K}
 0.75
-Compressor power   : 992.1 W 	3385 BTU / h
-Condenser heat out : 3542 W 	12090 BTU / h
-Evaporator heat in : 2550 W 	8701 BTU / h
+Compressor power   : 992.1 W 	3385 BTU / h	0.2821 TR
+Condenser heat out : 3542 W 	12090 BTU / h	1.007 TR
+Evaporator heat in : 2550 W 	8701 BTU / h	0.7251 TR
 COP(cooling)       : 2.57
 COP(heating)       : 3.57
 ```
