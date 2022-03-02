@@ -1,7 +1,8 @@
 const wait = 500;
 
 math.import({ props, HAprops, phase })
-const parser = self.math.parser()
+math.createUnit('TR', '12e3 BTU/h')
+const parser = math.parser()
 
 ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14')
 
