@@ -45,6 +45,7 @@ function doMath(expressions) {
 function sendMath() {
   const expressions = editor.getValue().split("\n");
   const calculated = doMath(expressions);
-  results.setValue(calculated.filter(x => x != "undefined" && x != "[]").join("\n"));
+  const badResults = ["[]", "", "undefined"]
+  results.setValue(calculated.filter(x => !badResults.includes(x)).join("\n"));
   results.clearSelection();
 }
