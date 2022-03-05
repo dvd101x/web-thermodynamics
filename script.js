@@ -12,6 +12,7 @@ editor.setOptions({
   showGutter: false, // hide the gutter
   theme: "ace/theme/solarized_light",
   mode: "ace/mode/python",
+  wrap: "free"
 });
 
 editor.on("change", code => {
