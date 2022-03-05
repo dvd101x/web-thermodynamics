@@ -32,8 +32,8 @@ function doMath(expressions) {
   return expressions.map(ex => {
     try {
       let result = parser.evaluate(ex)
-      if (typeof result != 'string')
-        {result = math.format(result,14)}
+      if (typeof result != 'string' & result != undefined)
+        result = math.format(result,14)
       return result
     } catch (e) {
       return e.toString()
@@ -45,7 +45,7 @@ function doMath(expressions) {
 function sendMath() {
   const expressions = editor.getValue().split("\n");
   const calculated = doMath(expressions);
-  const badResults = ["[]", "", "undefined"]
+  const badResults = ["[]", "", undefined]
   results.setValue(calculated.filter(x => !badResults.includes(x)).join("\n"));
   results.clearSelection();
 }
