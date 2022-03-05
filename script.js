@@ -32,7 +32,7 @@ function doMath(expressions) {
   return expressions.map(ex => {
     try {
       let result = parser.evaluate(ex)
-      if (typeof result != 'string' & result != undefined)
+      if (!['string','undefined'].includes(typeof result))
         result = math.format(result,14)
       return result
     } catch (e) {
