@@ -242,7 +242,7 @@ function calcPropUnits(prop) {
   if (prop.includes('|')) {
     let listProp = prop.match(/\(\w+?\)/g).map(str => str.slice(1, -1))
     if (listProp.length == 2) {
-      return `(${propUnit[listProp[0]]})/${propUnit[listProp[1]]})`
+      return `(${propUnit[listProp[0]]})/(${propUnit[listProp[1]]})`
     }
     else if (listProp.length == 3) {
       return `(${propUnit[listProp[0]]})/(${propUnit[listProp[1]]} ${propUnit[listProp[2]]})`
