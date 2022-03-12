@@ -260,18 +260,12 @@ toUnit = (v, u) => u ? math.unit(v, u) : math.unit(v)
 
 function props(desiredProperty, fluidName, fluidProperties) {
   const calcPropUnit = calcPropUnits(desiredProperty)
-  const arrayProperties = Object.entries(fluidProperties)
-  let prop, value
-  if (arrayProperties.length > 0) {
-
-    prop = [arrayProperties[0][0],
-    arrayProperties[1][0]]
-
-    const units = [propUnit[subProp(prop[0])],
-    propUnit[subProp(prop[1])]]
-
-    value = [toValue(arrayProperties[0][1], units[0]),
-    toValue(arrayProperties[1][1], units[1])]
+  let prop  = Object.keys(fluidProperties).slice(0,2)
+  let value = Object.values(fluidProperties).slice(0,2)
+  
+  if (prop.length > 0) {
+    const units = [propUnit[subProp(prop[0])], propUnit[subProp(prop[1])]]
+    value = [toValue(value[0], units[0]), toValue(value[1], units[1])]
   }
   else {
     prop = ["", ""]
