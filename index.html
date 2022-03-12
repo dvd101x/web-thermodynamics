@@ -12,23 +12,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14/ace.js"></script>
     <script src="fluidProperties.js"></script>
 </head>
+
 <body>
-<div id="editor"># Density of Nitrogen at:
-#   Temperature 25 °C
-#   Pressure 1 atmosphere
-props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')
+    <div id="editor"># Density of Nitrogen at:
+# Temperature 25 °C
+# Pressure 1 atmosphere
+props('D', 'Nitrogen', {T:25 degC, P:1 atm})
 
 # Phase of Water at:
-#   Pressure 1 atmosphere
-#   Quality 0%
-phase('P', 1 atm, 'Q', 0 %, 'Water')
+# Pressure 1 atmosphere
+# Quality 0%
+phase('Water', {P:1 atm, Q: 0 %})
 
 # Enthalpy of humid air at Standard Conditions of Pressure and Temperature (STP)
-#   Temperature 25 °C
-#   Pressure 1 atmosphere
-#   Relative humidity 90%
-HAprops('H', 'T', 25 degC, 'P', 1 atm, 'R', 90 %)</div>
-<div id="result">Type on the input to get results</div>
-<script src="script.js"></script>
+# Temperature 25 °C
+# Pressure 1 atmosphere
+# Relative humidity 90%
+HAprops('H', {T: 25 degC, P:1 atm, R:90 %})</div>
+    <div id="result">Type on the input to get results</div>
+    <script src="script.js"></script>
 </body>
+
 </html>

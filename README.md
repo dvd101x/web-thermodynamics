@@ -57,40 +57,39 @@ It can solve many other problems based con [CoolProp High Level API documentatio
 
 ```python
 # Saturation temperature of Water at 1 atm in K
-props('T', 'P', 101325 Pa, 'Q', 0, 'Water')
+props('T', 'Water', {P:101325 Pa, Q: 0}
 
 # Saturated vapor enthalpy of Water at 1 atm in J/kg
-H_V = props('H', 'P', 101325 Pa, 'Q', 1, 'Water')
+H_V = props('H', 'Water', {P:101325 Pa, Q: 1})
 
 # Saturated liquid enthalpy of Water at 1 atm in J/kg
-H_L = props('H', 'P', 101325 Pa, 'Q', 0, 'Water')
+H_L = props('H', 'Water', {P:101325 Pa, Q: 0})
 
 # Latent heat of vaporization of Water at 1 atm in J/kg
 H_V - H_L
-
 # Get the density of Water at T = 461.1 K and P = 5.0e6 Pa, imposing the liquid phase
-props('D', 'T|liquid', 461.1 K, 'P', 5e6 Pa, 'Water')
+props('D', 'Water', {'T|liquid':461.1 K, P: 5e6 Pa})
 
 # Get the density of Water at T = 597.9 K and P = 5.0e6 Pa, imposing the gas phase
-props('D', 'T', 597.9 K, 'P|gas', 5e6 Pa, 'Water')
+props('D', 'Water', {T:597.9 K, 'P|gas': 5e6 Pa})
 
-# You can call the props function directly using dummy arguments for the other unused parameters:
-props("Tcrit", "", 0, "", 0, "Water")
+# You can call the props function directly using an empty object:
+props('Tcrit', 'Water', {})
 
 # It can be useful to know what the phase of a given state point is
-phase('P', 101325 Pa, 'Q', 0, 'Water')
+phase('Water', {P:101325 Pa, Q:0})
 
 # The phase index (as floating point number) can also be obtained using the props function:
-props('Phase', 'P', 101325 Pa, 'Q', 0, 'Water')
+props('Phase', 'Water', {P:101325 Pa, Q: 0})
 
 # c_p using c_p
-props('C', 'P', 101325 Pa, 'T', 300 K, 'Water')
+props('C', 'Water', {P:101325 Pa, T: 300 K})
 
 # c_p using derivate
-props('d(Hmass)/d(T)|P', 'P', 101325 Pa, 'T', 300 K, 'Water')
+props('d(Hmass)/d(T)|P', 'Water', {P:101325 Pa, T: 300 K})
 
 # c_p using second partial derivative
-props('d(d(Hmass)/d(T)|P)/d(Hmass)|P', 'P', 101325 Pa, 'T', 300 K, 'Water')
+props('d(d(Hmass)/d(T)|P)/d(Hmass)|P', 'Water', {P:101325 Pa, T: 300 K})
 ```
 Shall return
 ```javascript
@@ -119,47 +118,49 @@ evap  = {T: -20 degC, P_drop: 0 Pa, superHeating: 10 K}
 cond  = {T:  40 degC, P_drop: 0 Pa, subCooling  : 10 K}
 etaS  = 0.75
 
-# Store empty arrays for Temperature, Pressure, Density, Enthalpy and Entropy
-# Inside an object called cycle
-cycle = {T:[], P:[], D:[], H:[], S:[]};
+# Define an array of empty states as objects
+cycle = [{},{},{},{}];
 
 # Define low and high pressure
-pLow  = props('P', 'T', evap.T, 'Q', 100%, fluid);
-pHigh = props('P', 'T', cond.T, 'Q', 0%  , fluid);
+pLow  = props('P', fluid, {T: evap.T, Q: 100%});
+pHigh = props('P', fluid, {T: cond.T, Q: 0%  });
 
 # 4 to 1 Evaporation
-cycle.P[1] = pLow;
-cycle.T[1] = evap.T+ evap.superHeating;
-cycle.D[1] = props('D', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
-cycle.H[1] = props('H', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
-cycle.S[1] = props('S', 'T', cycle.T[1], 'P', cycle.P[1], fluid);
+cycle[1].P = pLow;
+cycle[1].T = evap.T+ evap.superHeating;
+cycle[1].D = props('D', fluid, cycle[1]);
+cycle[1].H = props('H', fluid, cycle[1]);
+cycle[1].S = props('S', fluid, cycle[1]);
 
 # 1 to 2 Compression of vapor
-cycle.P[2] = pHigh;
-H_i        = props('H', 'P', cycle.P[2], 'S', cycle.S[1], fluid);
-cycle.H[2] = (H_i-cycle.H[1])/etaS + cycle.H[1];
-cycle.T[2] = props('T', 'P', cycle.P[2], 'H', cycle.H[2], fluid);
-cycle.D[2] = props('D', 'P', cycle.P[2], 'H', cycle.H[2], fluid);
-cycle.S[2] = props('S', 'P', cycle.P[2], 'H', cycle.H[2], fluid);
+cycle[2].P = pHigh;
+H_i        = props('H', fluid,{P:cycle[2].P, S:cycle[1].S});
+cycle[2].H = (H_i-cycle[1].H)/etaS + cycle[1].H;
+cycle[2].T = props('T', fluid, cycle[2]);
+cycle[2].D = props('D', fluid, cycle[2]);
+cycle[2].S = props('S', fluid, cycle[2]);
+
 
 # 2 to 3 Condensation
-cycle.P[3] = cycle.P[2] - cond.P_drop;
-cycle.T[3] = cond.T-cond.subCooling;
-cycle.D[3] = props('D', 'P', cycle.P[3], 'T', cycle.T[3], fluid);
-cycle.H[3] = props('H', 'P', cycle.P[3], 'T', cycle.T[3], fluid);
-cycle.S[3] = props('S', 'P', cycle.P[3], 'T', cycle.T[3], fluid);
+cycle[3].P = cycle[2].P - cond.P_drop;
+cycle[3].T = cond.T-cond.subCooling;
+cycle[3].D = props('D', fluid, cycle[3]);
+cycle[3].H = props('H', fluid, cycle[3]);
+cycle[3].S = props('S', fluid, cycle[3]);
 
 # 3 to 4 Expansion
-cycle.H[4] = cycle.H[3];
-cycle.P[4] = cycle.P[1] - evap.P_drop;
-cycle.T[4] = props('T', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
-cycle.D[4] = props('D', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
-cycle.S[4] = props('S', 'P', cycle.P[4], 'H', cycle.H[4], fluid);
+cycle[4].H = cycle[3].H;
+cycle[4].P = cycle[1].P - evap.P_drop;
+cycle[4].T = props('T', fluid, cycle[4]);
+cycle[4].D = props('D', fluid, cycle[4]);
+cycle[4].S = props('S', fluid, cycle[4]);
+
 
 # Work, Energy and Performance
-W_comp   = mDot*(cycle.H[2] - cycle.H[1]);
-Q_h      = mDot*(cycle.H[2] - cycle.H[3]);
-Q_c      = mDot*(cycle.H[1] - cycle.H[4]);
+W_comp   = mDot*(cycle[2].H - cycle[1].H);
+Q_h      = mDot*(cycle[2].H - cycle[3].H);
+Q_c      = mDot*(cycle[1].H - cycle[4].H);
+
 evap_COP = Q_c/W_comp;
 cond_COP = Q_h/W_comp;
 
@@ -191,10 +192,9 @@ COP(heating)       : 3.57
 
 Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engineering-Solver) that includes additional features:
 
-* Text editor with syntax highlighting, find and replace, closing parenthesis, etc.
 * Saves in the browser (you can continue where you left off)
 * 9 workspaces, so you can try different things
-* The interface doesn't freeze during big calculaitons (uses a webworker)
+* Uses a webworker to avoid freezing during big calculaitons
 * A few more examples focused on the many features of mathjs
 
 # References
