@@ -11,9 +11,9 @@ https://dvd101x.github.io/CoolPropJavascriptDemo/
 
 It loads with three example expressions for each of the CoolProp functions available:
 
-* *Density* of **nitrogen** at a *temperature* **25 °C** and a *pressure* **1 atmosphere**: `props('D', 'T', 25 degC, 'P', 1 atm, 'Nitrogen')` shall return `1.1452448929367 kg / m^3`
-* *Phase* of **water** at a *pressure* of **1 atmosphere** and **0%** *Quality*: `phase('P',1 atm,'Q',0%,'Water')`shall return `twophase`
-* *Enthalpy* as a function of *temperature*, *pressure* and *relative humidity* at STP `HAprops('H','T',25 degC,'P', 1 atm,'R', 50%)` shall return `50423.450391029 J / kg`
+* *Density* of **nitrogen** at a *temperature* **25 °C** and a *pressure* **1 atmosphere**: `props('D', 'Nitrogen', {T:25 degC, P:1 atm})` shall return `1.1452448929367 kg / m^3`
+* *Phase* of **water** at a *pressure* of **1 atmosphere** and **0%** *Quality*: `phase('Water', {P:1 atm, Q: 0 %})`shall return `twophase`
+* *Enthalpy* as a function of *temperature*, *pressure* and *relative humidity* at STP `HAprops('H', {T: 25 degC, P:1 atm, R:90 %})` shall return `50423.450391029 J / kg`
 
 # Intermediate example
 
@@ -21,25 +21,24 @@ This demo uses libraries with many capabilities. There are many conversions avai
 
 ``` python
 # Density of carbon dioxide at 100 bar and 25C in lbm/in^3
-rho = props('D', 'T', 25 degC, 'P', 100 bar, 'CO2') in lbm/in^3
+rho = props('D', 'CO2', {T:25 degC, P:100 bar}) in lbm/in^3
 
 # Saturated vapor enthalpy [J/kg] of R134a at 25C
-enthalpy = props('H', 'T', 25 celsius, 'Q', 100%, 'R134a')
+enthalpy = props('H', 'R134a', {T:25 celsius, Q:100%})
 
 # Enthalpy (J per kg dry air) as a function of temperature, pressure, 
 #    and relative humidity at STP
-enthalpyDry = HAprops('H', 'T', 298.15 K, 'P', 101325 Pa, 'R', 0.5)
+enthalpyDry = HAprops('H', {T:298.15 K, P:101325 Pa, R:0.5})
 
-# Create an empty array inside an object
-cycle = {Temp:[]};
+# Create an empty array with empty objects
+cycle = [{},{}];
 
 # Temperature of saturated air at the previous enthalpy
-cycle.Temp[1] = HAprops('T', 'P', 1 atm, 'H', enthalpyDry, 'R', 1.0)
+cycle[1].T = HAprops('T', {P:1 atm, H:enthalpyDry, R:1.0})
 
 # Temperature of saturated air in farenheit
-cycle.Temp[2] = HAprops('T', 'H', enthalpyDry, 'R', 1.0, 'P', 1 atm) to degF
+cycle[2].T = HAprops('T', {H:enthalpyDry, R:1.0, P:1 atm}) to degF
 
-cycle.Temp to degC
 ```
 Shall return:
 ```javascript
@@ -57,7 +56,7 @@ It can solve many other problems based con [CoolProp High Level API documentatio
 
 ```python
 # Saturation temperature of Water at 1 atm in K
-props('T', 'Water', {P:101325 Pa, Q: 0}
+props('T', 'Water', {P:101325 Pa, Q: 0})
 
 # Saturated vapor enthalpy of Water at 1 atm in J/kg
 H_V = props('H', 'Water', {P:101325 Pa, Q: 1})
