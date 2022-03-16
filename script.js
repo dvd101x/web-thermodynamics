@@ -29,24 +29,49 @@ results.setOptions({
 })
 
 function doMath(expressions) {
+  // Clear variables from parser
   parser.clear()
-  return expressions.map(ex => {
+  // Test each block of expressions
+  return expressions.map(x => {
     try {
-      let result = parser.evaluate(ex)
-      if (!['string','undefined'].includes(typeof result))
-        result = math.format(result,14)
-      return result
-    } catch (e) {
-      return e.toString()
+      return parser.evaluate(x)
+    } catch (error) {
+      return error.toString()
     }
+  })
+}
+
+function showMath(x) {
+  if (['string', undefined].includes(typeof x)) {
+    return x
   }
-  )
+  else {
+    return math.format(x, 14)
+  }
+}
+
+function resultsToString(blockResults) {
+  let lines = "";
+  let blockResult
+  for (blockResult of blockResults) {
+    if (blockResult.entries) {
+      const results = blockResult.entries
+      let result
+      for (result of results) {
+        lines += "\n" + showMath(result)
+      }
+    }
+    else {
+      lines += "\n" + showMath(blockResult)
+    }
+    lines += "\n"
+  }
+  return lines.slice(1,-1) //ignore the first new line
 }
 
 function sendMath() {
-  const expressions = editor.getValue().split("\n");
+  const expressions = editor.getValue().split(/\n\W*\n/g).filter(x => x);
   const calculated = doMath(expressions);
-  const badResults = ["[]", "", undefined]
-  results.setValue(calculated.filter(x => !badResults.includes(x)).join("\n"));
+  results.setValue(resultsToString(calculated));
   results.clearSelection();
 }
