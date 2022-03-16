@@ -51,20 +51,23 @@ function showMath(x) {
 }
 
 function resultsToString(blockResults) {
+  if (!blockResults) return ""
   let lines = "";
   let blockResult
   for (blockResult of blockResults) {
-    if (blockResult.entries) {
-      const results = blockResult.entries
-      let result
-      for (result of results) {
-        lines += "\n" + showMath(result)
+    if(blockResult){
+      if (blockResult.entries) {
+        const results = blockResult.entries
+        let result
+        for (result of results) {
+          lines += "\n" + showMath(result)
+        }
       }
+      else {
+        lines += "\n" + showMath(blockResult)
+      }
+      lines += "\n"
     }
-    else {
-      lines += "\n" + showMath(blockResult)
-    }
-    lines += "\n"
   }
   return lines.slice(1,-1) //ignore the first new line
 }
