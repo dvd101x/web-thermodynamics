@@ -71,7 +71,9 @@ function resultsToString(blockResults) {
 }
 
 function sendMath() {
-  const expressions = editor.getValue().split(/\n\W*\n/g).filter(x => x);
+  const expressions = editor.getValue().trim()            // trim input
+                                       .split(/\n\s*\n/g) // split by block
+                                       .map(x=>x.trim()); // trim every block
   const calculated = doMath(expressions);
   results.setValue(resultsToString(calculated));
   results.clearSelection();
