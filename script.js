@@ -53,13 +53,11 @@ function showMath(x) {
 function resultsToString(blockResults) {
   if (!blockResults) return ""
   let lines = "";
-  let blockResult
-  for (blockResult of blockResults) {
-    if(blockResult){
+  for (let blockResult of blockResults) {
+    if (blockResult) {
       if (blockResult.entries) {
         const results = blockResult.entries
-        let result
-        for (result of results) {
+        for (let result of results) {
           lines += "\n" + showMath(result)
         }
       }
@@ -69,7 +67,7 @@ function resultsToString(blockResults) {
       lines += "\n"
     }
   }
-  return lines.slice(1,-1) //ignore the first new line
+  return lines.slice(1, -1) //ignore the first new line
 }
 
 function sendMath() {
