@@ -6,75 +6,68 @@ const parser = math.parser()
 
 ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.14')
 
-var timer;
-var editor = ace.edit("editor");
+let timer;
+let editor = ace.edit("editor");
 editor.setOptions({
-  showGutter: false, // hide the gutter
-  theme: "ace/theme/solarized_light",
-  mode: "ace/mode/python",
-  wrap: "free"
+    showGutter: false, // hide the gutter
+    theme: "ace/theme/solarized_light",
+    mode: "ace/mode/python",
+    wrap: "free"
 });
 
 editor.on("change", code => {
-  clearTimeout(timer);
-  timer = setTimeout(sendMath, wait, code);
+    clearTimeout(timer);
+    timer = setTimeout(sendMath, wait, code);
 });
 
-var results = ace.edit("result");
+let results = ace.edit("result");
+
 results.setOptions({
-  showGutter: false,
-  theme: "ace/theme/iplastic",
-  mode: "ace/mode/javascript",
-  readOnly: true,
+    showGutter: false,
+    theme: "ace/theme/iplastic",
+    mode: "ace/mode/javascript",
+    readOnly: true,
 })
 
-function doMath(expressions) {
-  // Clear variables from parser
-  parser.clear()
-  // Test each block of expressions
-  return expressions.map(x => {
+function math2str(x) {
+    return typeof x == "string" ? x : math.format(x, 14)
+}
+
+function evalBlock(block) {
+    let mathResult
     try {
-      return parser.evaluate(x)
+        mathResult = parser.evaluate(block)
     } catch (error) {
-      return error.toString()
+        return error.toString()
     }
-  })
-}
-
-function showMath(x) {
-  if (['string', undefined].includes(typeof x)) {
-    return x
-  }
-  else {
-    return math.format(x, 14)
-  }
-}
-
-function resultsToString(blockResults) {
-  if (!blockResults) return ""
-  let lines = "";
-  for (let blockResult of blockResults) {
-    if (blockResult) {
-      if (blockResult.entries) {
-        const results = blockResult.entries
-        for (let result of results) {
-          lines += "\n" + showMath(result)
+    if (mathResult) {
+        if (mathResult.entries) {
+            return mathResult.entries
+                .filter(x => x)
+                .map(x => math2str(x)).join("\n")
         }
-      }
-      else {
-        lines += "\n" + showMath(blockResult)
-      }
-      lines += "\n"
+        else {
+            return math2str(mathResult)
+        }
     }
-  }
-  return lines.slice(1, -1) //ignore the first new line
+}
+
+function showMath(input) {
+    parser.clear()
+    const blocks =
+        input
+            .trim()            // trim input
+            .split(/\n\s*\n/g)
+    blockResults = blocks.map(x => evalBlock(x)).filter(x => x)
+    if (typeof blockResults == "string") {
+        return blockResults
+    }
+    else {
+        return blockResults.join('\n\n')
+    }
 }
 
 function sendMath() {
-  const expressions = editor.getValue().trim()            // trim input
-                                       .split(/\n\s*\n/g) // split by block
-                                       .map(x=>x.trim()); // trim every block
-  const calculated = doMath(expressions);
-  results.setValue(resultsToString(calculated));
-  results.clearSelection();
+    results.setValue(showMath(editor.getValue()));
+    results.clearSelection();
 }
