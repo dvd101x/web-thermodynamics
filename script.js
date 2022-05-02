@@ -59,12 +59,7 @@ function showMath(input) {
             .trim()            // trim input
             .split(/\n\s*\n/g)
     blockResults = blocks.map(x => evalBlock(x)).filter(x => x)
-    if (typeof blockResults == "string") {
-        return blockResults
-    }
-    else {
-        return blockResults.join('\n\n')
-    }
+    return typeof blockResults == "string" ? blockResults : blockResults.join('\n\n')
 }
 
 function sendMath() {
