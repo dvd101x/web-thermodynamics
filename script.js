@@ -40,7 +40,7 @@ function evalBlock(block) {
     } catch (error) {
         return error.toString()
     }
-    if (mathResult) {
+    if (typeof mathResult != 'undefined') {
         if (mathResult.entries) {
             return mathResult.entries
                 .filter(x => typeof x != 'undefined')
