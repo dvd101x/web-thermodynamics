@@ -43,7 +43,7 @@ function evalBlock(block) {
     if (mathResult) {
         if (mathResult.entries) {
             return mathResult.entries
-                .filter(x => x)
+                .filter(x => typeof x != 'undefined')
                 .map(x => math2str(x)).join("\n")
         }
         else {
@@ -58,7 +58,7 @@ function showMath(input) {
         input
             .trim()            // trim input
             .split(/\n\s*\n/g)
-    blockResults = blocks.map(x => evalBlock(x)).filter(x => x)
+    blockResults = blocks.map(x => evalBlock(x)).filter(x => typeof x != 'undefined' & x != [])
     return typeof blockResults == "string" ? blockResults : blockResults.join('\n\n')
 }
 
