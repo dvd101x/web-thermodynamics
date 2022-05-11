@@ -30,7 +30,7 @@ enthalpy = props('H', 'R134a', {T:25 celsius, Q:100%})
 #    and relative humidity at STP
 enthalpyDry = HAprops('H', {T:298.15 K, P:101325 Pa, R:0.5})
 
-# Create an empty array with empty objects
+# Create an array with empty objects
 cycle = [{},{}];
 
 # Temperature of saturated air at the previous enthalpy
