@@ -120,39 +120,42 @@ etaS  = 0.75
 # Define an array of empty states as objects
 cycle = [{},{},{},{}];
 
+# Make a function for this specific fluid
+p(desiredProperty, currentState) = props(desiredProperty, fluid, currentState);
+
 # Define low and high pressure
-pLow  = props('P', fluid, {T: evap.T, Q: 100%});
-pHigh = props('P', fluid, {T: cond.T, Q: 0%  });
+pLow  = p('P', {T: evap.T, Q: 100%});
+pHigh = p('P', {T: cond.T, Q: 0%  });
 
 # 4 to 1 Evaporation
 cycle[1].P = pLow;
 cycle[1].T = evap.T+ evap.superHeating;
-cycle[1].D = props('D', fluid, cycle[1]);
-cycle[1].H = props('H', fluid, cycle[1]);
-cycle[1].S = props('S', fluid, cycle[1]);
+cycle[1].D = p('D', cycle[1]);
+cycle[1].H = p('H', cycle[1]);
+cycle[1].S = p('S', cycle[1]);
 
 # 1 to 2 Compression of vapor
 cycle[2].P = pHigh;
-H_i        = props('H', fluid,{P:cycle[2].P, S:cycle[1].S});
+H_i        = p('H',{P:cycle[2].P, S:cycle[1].S});
 cycle[2].H = (H_i-cycle[1].H)/etaS + cycle[1].H;
-cycle[2].T = props('T', fluid, cycle[2]);
-cycle[2].D = props('D', fluid, cycle[2]);
-cycle[2].S = props('S', fluid, cycle[2]);
+cycle[2].T = p('T', cycle[2]);
+cycle[2].D = p('D', cycle[2]);
+cycle[2].S = p('S', cycle[2]);
 
 
 # 2 to 3 Condensation
 cycle[3].P = cycle[2].P - cond.P_drop;
 cycle[3].T = cond.T-cond.subCooling;
-cycle[3].D = props('D', fluid, cycle[3]);
-cycle[3].H = props('H', fluid, cycle[3]);
-cycle[3].S = props('S', fluid, cycle[3]);
+cycle[3].D = p('D', cycle[3]);
+cycle[3].H = p('H', cycle[3]);
+cycle[3].S = p('S', cycle[3]);
 
 # 3 to 4 Expansion
 cycle[4].H = cycle[3].H;
 cycle[4].P = cycle[1].P - evap.P_drop;
-cycle[4].T = props('T', fluid, cycle[4]);
-cycle[4].D = props('D', fluid, cycle[4]);
-cycle[4].S = props('S', fluid, cycle[4]);
+cycle[4].T = p('T', cycle[4]);
+cycle[4].D = p('D', cycle[4]);
+cycle[4].S = p('S', cycle[4]);
 
 
 # Work, Energy and Performance
