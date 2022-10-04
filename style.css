@@ -6,11 +6,11 @@ html, body {
 
 body {
   display: flex;
+  overflow: hidden;
 }
 
 #editor{
   flex: 3;
-  overflow: hidden,
 }
 
 #output{
