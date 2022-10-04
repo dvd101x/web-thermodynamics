@@ -76,7 +76,7 @@ const md = markdownit({ html: true })
   })
 
   function makeDoc(code) {
-    const splitCode = code.split('\n');
+    const splitCode = code.split(/\n\s*\n/g);
     const lineTypes = splitCode.map(line => line.startsWith('# ') ? 'md' : 'math');
     let cells = [];
     let lastType = '';
