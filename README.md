@@ -1,17 +1,6 @@
-# Todo
-
-Markdown export
-Github style
-
 # CoolPropJavascriptDemo
 
-This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs
-
-# Getting started
-
-Open this link:
-
-https://dvd101x.github.io/CoolPropJavascriptDemo/
+This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
 
 # Basic example
 
@@ -31,6 +20,26 @@ It loads with three example expressions for each of the CoolProp functions avail
   ```
 
 On this example we mix the putouts with **markdown** and equations with **latex** if we start the comment with a `# ` this is a nice way to make present the results including some input markdown.
+
+# Getting started
+
+Open this link:
+
+https://dvd101x.github.io/CoolPropJavascriptDemo/
+
+# How does it work
+
+```mermaid
+flowchart LR
+    Start((Start)) --> Code[Write Problem]
+    Thermo[Thermodynamic Properties]-->Math[Evaluate Math]
+    Code --> Math
+    Math-->Render[Render Report]
+    Code --> Markdown
+    Latex --> Markdown
+    Markdown --> Render
+```
+
 
 # Intermediate example
 
@@ -215,6 +224,20 @@ Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engine
 * 9 workspaces, so you can try different things
 * Uses a webworker to avoid freezing during big calculaitons
 * A few more examples focused on the many features of mathjs
+
+# Dependancies
+
+Uses the following js libraries
+
+* Calculations
+  * [Mathjs](https://mathjs.org/)
+  * [CoolProp](http://www.coolprop.org/)
+* Editing
+  * [AceEditor](https://ace.c9.io/)
+* Rendering results
+  * [Markdown-it](https://github.com/markdown-it/markdown-it)
+  * [markdown-it-katex](https://github.com/waylonflinn/markdown-it-katex)
+  * [katex](https://katex.org/)
 
 # References
 
