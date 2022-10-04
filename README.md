@@ -1,4 +1,10 @@
+# Todo
+
+Markdown export
+Github style
+
 # CoolPropJavascriptDemo
+
 This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs
 
 # Getting started
@@ -11,9 +17,20 @@ https://dvd101x.github.io/CoolPropJavascriptDemo/
 
 It loads with three example expressions for each of the CoolProp functions available:
 
-* *Density* of **nitrogen** at a *temperature* **25 °C** and a *pressure* **1 atmosphere**: `props('D', 'Nitrogen', {T:25 degC, P:1 atm})` shall return `1.1452448929367 kg / m^3`
-* *Phase* of **water** at a *pressure* of **1 atmosphere** and **0%** *Quality*: `phase('Water', {P:1 atm, Q: 0 %})`shall return `twophase`
-* *Enthalpy* as a function of *temperature*, *pressure* and *relative humidity* at STP `HAprops('H', {T: 25 degC, P:1 atm, R:90 %})` shall return `50423.450391029 J / kg`
+* *Density* of **nitrogen** at a *temperature* **25 °C** and a *pressure* **1 atmosphere**: `props('D', 'Nitrogen', {T:25 degC, P:1 atm})`
+  ```
+  1.1452448929367 kg / m^3
+  ```
+* *Phase* of **water** at a *pressure* of **1 atmosphere** and **0%** *Quality*: `phase('Water', {P:1 atm, Q: 0 %})`
+  ```
+  twophase
+  ```
+* *Enthalpy* $[\frac{J}{kg_{dry\ air}}]$ as a function of *temperature*, *pressure* and *relative humidity* at STP `HAprops('H', {T: 25 degC, P:1 atm, R:90 %})`
+  ```
+  50423.450391029 J / kg
+  ```
+
+On this example we mix the putouts with **markdown** and equations with **latex** if we start the comment with a `# ` this is a nice way to make present the results including some input markdown.
 
 # Intermediate example
 
