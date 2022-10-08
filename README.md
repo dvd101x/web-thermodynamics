@@ -233,7 +233,7 @@ Uses the following js libraries
   * [Mathjs](https://mathjs.org/)
   * [CoolProp](http://www.coolprop.org/)
 * Editing
-  * [AceEditor](https://ace.c9.io/)
+  * [CodeMirror 5](https://codemirror.net/5/)
 * Rendering results
   * [Markdown-it](https://github.com/markdown-it/markdown-it)
   * [markdown-it-katex](https://github.com/waylonflinn/markdown-it-katex)
