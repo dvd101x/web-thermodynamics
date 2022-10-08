@@ -25,20 +25,29 @@ const example = [
 
 math.import({ props, HAprops, phase })
 math.createUnit('TR', '12e3 BTU/h')
+
 const parser = math.parser()
-
-ace.config.set('basePath', 'https://cdnjs.cloudflare.com/ajax/libs/ace/1.11.2/')
-
+const inputCode = document.getElementById('editor')
+inputCode.value = example.join('\n');
 let timer;
-let editor = ace.edit("editor");
-editor.setOptions({
-    showGutter: false, // hide the gutter
-    theme: "ace/theme/solarized_light",
-    mode: "ace/mode/python",
-    wrap: "free"
+var editor = CodeMirror.fromTextArea(inputCode, {
+  lineNumbers: true,
+  lineWrapping: true,
+  mode: "mathjs",
+  keyMap: "sublime",
+  autoCloseBrackets: true,
+  extraKeys: {
+    "Alt-F": "findPersistent",
+    "Ctrl-Space": "autocomplete"
+  },
+  matchBrackets: true,
+  highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+  foldGutter: true,
+  gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+  showCursorWhenSelecting: true,
+  theme: "blackboard",
+  styleActiveLine: true,
 });
-
-editor.setValue(example.join('\n'))
 
 editor.on("change", code => {
     clearTimeout(timer);
@@ -76,7 +85,7 @@ const md = markdownit({ html: true })
   })
 
   function makeDoc(code) {
-    const splitCode = code.split(/\r?\n/g);
+    const splitCode = code.split('\n');
     const lineTypes = splitCode.map(line => line.startsWith('# ') ? 'md' : 'math');
     let cells = [];
     let lastType = '';
