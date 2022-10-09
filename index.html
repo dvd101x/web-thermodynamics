@@ -33,7 +33,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/search/jump-to-line.min.js" integrity="sha512-cFdaiExVrVnsHaQhcn3wR9zyndnXI6w7diUSonYbGoV6v/PgBEGZevVC4gvg+Jz5yfO3K0/r1ZMk3+IcdEl+pQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/search/matchesonscrollbar.min.js" integrity="sha512-QewO4zKWKKWZu8gL0GixoMAG4zzOz73cag2hKO8yOrByXXt/81xnYKYICWcRsm/wzZ+Cz3+VzfUFbQQGDRktaw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/search/match-highlighter.min.js" integrity="sha512-94h/nzerPpLt9vsOyZmNNemwyUESYD/Tnuem6b67+RQMETNFhH8pTCHLDZkGNhzEbmKO0AidJgS0aYH1mH9YfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/scroll/annotatescrollbar.min.js" integrity="sha512-SPKYZCZyjHhQngKdsnTUX0Cb3+gx53U0nVUs/VAV7zYrLdDBmqRi3EF8gevJS6ft1OstIt8BZFEY4TTuVBKbhQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/dialog/dialog.min.js" integrity="sha512-NAJeqwfpM7/nfX90EweQhjudb66diK3Y9mkBjb4xJ6wufuVqFVAjHd8mJW//CGHNR9cI8wUfDRJ0jtLzZ9v8Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/edit/matchbrackets.min.js" integrity="sha512-GSYCbN/le5gNmfAWVEjg1tKnOH7ilK6xCLgA7c48IReoIR2g2vldxTM6kZlN6o3VtWIe6fHu/qhwxIt11J8EBA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/addon/edit/closebrackets.min.js" integrity="sha512-tsjcYO5hFvViRssxiM7Jhd8601epWOx1He3Hl4yuI5dKKPxr43KxkOhc9GZeeqzlYJm9ABb7UPA9697NiqZZ7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -50,10 +49,12 @@
 </head>
 
 <body>
-    <textarea id="editor"></textarea>
-    <article id="output" class="markdown-body">
-        <h1>Type on the input to get results</h1>
-    </article>
+    <main>
+        <textarea id="editor"></textarea>
+        <article id="output" class="markdown-body">
+            <h1>Type on the input to get results</h1>
+        </article>
+    </main>
     <script src="script.js" defer></script>
 </body>
 

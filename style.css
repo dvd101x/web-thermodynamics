@@ -1,7 +1,7 @@
 html, body {
   margin:0;
-  padding:0;
   height: 100vh;
+  overflow: hidden;
 }
 
 .CodeMirror-focused .cm-matchhighlight {
@@ -20,21 +20,33 @@ html, body {
 
 body {
   display: flex;
-  overflow-y: hidden;
+  overflow: hidden;
+  margin:0;
+  height: 100vh;
+  flex-direction: column;
 }
 
-body > div.CodeMirror{
+main{
+  display: flex;
+  overflow: hidden;
+  flex: 1;
+}
+
+main > div.CodeMirror{
   flex:1;
   height: auto;
-  overflow: auto;
 }
 
-body > .markdown-body {
+main > article.markdown-body{
   flex:1;
-  overflow: scroll;
+  overflow: auto;
   box-sizing: border-box;
+}
+
+main > .markdown-body {
   min-width: 200px;
   max-width: 980px;
+  overflow: scroll;
   padding: 1em;
 }
 
