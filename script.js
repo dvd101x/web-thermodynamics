@@ -41,7 +41,7 @@ var editor = CodeMirror.fromTextArea(inputCode, {
     "Ctrl-Space": "autocomplete"
   },
   matchBrackets: true,
-  highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: true },
+  highlightSelectionMatches: { showToken: /\w/, annotateScrollbar: false },
   foldGutter: true,
   gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
   showCursorWhenSelecting: true,
