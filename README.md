@@ -178,7 +178,7 @@ cycle[3].S = p('S', cycle[3]);
 
 # 3 to 4 Expansion
 cycle[4].H = cycle[3].H;
-cycle[4].P = cycle[1].P - evap.P_drop;
+cycle[4].P = cycle[1].P + evap.P_drop;
 cycle[4].T = p('T', cycle[4]);
 cycle[4].D = p('D', cycle[4]);
 cycle[4].S = p('S', cycle[4]);
