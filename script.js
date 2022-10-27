@@ -77,6 +77,10 @@ function evalBlock(block) {
     }
 }
 
+function evalBlocks(blocks){
+	return blocks.map(block=>evalBlock(block))
+}
+
 const md = markdownit({ html: true })
   .use(texmath, {
     engine: katex,
@@ -106,9 +110,9 @@ const md = markdownit({ html: true })
         cleanCells.push({ cell_type: 'md', source: x.source.map(e => e.slice(2)) })
       }
       else {
-        let notEmptyMath = x.source.filter(e => e)
-        if (notEmptyMath.length) {
-          cleanCells.push({ cell_type: 'math', source: notEmptyMath })
+		const thereIsSomething = x.source.join('\n').trim();
+        if (thereIsSomething) {
+          cleanCells.push({ cell_type: 'math', source: x.source})
         }
       }
     })
@@ -117,8 +121,12 @@ const md = markdownit({ html: true })
   
     const processOutput = {
       math: mathCell => {
-        let result = evalBlock(mathCell.join('\n'))
-        return result.length ? '<pre>' + result + '</pre>' : ''
+        const results = evalBlocks(
+			mathCell.join('\n')
+				.split(/\n\s*\n/g)
+			)
+        return results.map(
+			result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
       },
       md: markdown => md.render(markdown.join('\n'))
     }
