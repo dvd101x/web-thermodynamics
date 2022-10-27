@@ -121,11 +121,13 @@ const md = markdownit({ html: true })
   
     const processOutput = {
       math: mathCell => {
-        const results = evalBlocks(
-			mathCell.join('\n')
-				.split(/\n\s*\n/g)
-			)
-        return results.map(
+		const blocks = mathCell.join('\n')
+			.split(/\n\s*\n/g)
+			.filter(x=>x.trim())
+        const results = evalBlocks(blocks)
+        return results
+			.filter(x=>x)
+			.map(
 			result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
       },
       md: markdown => md.render(markdown.join('\n'))
