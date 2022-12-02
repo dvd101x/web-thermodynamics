@@ -134,64 +134,85 @@ twophase
 These concepts can be used to calculate complete thermodyinamic cycles.
 
 ``` python
-# Vapor compression cycle
+# # Vapor compression cycle
+# Specifies all states of a typical vapor compression cycle
+
+# ## Inputs
+# 
+# Fluid and mass flow
 fluid = 'R134a'
 mDot  = 1 kg/minute
 
+# Component data
 evap  = {T: -20 degC, P_drop: 0 Pa, superHeating: 10 K}
 cond  = {T:  40 degC, P_drop: 0 Pa, subCooling  : 10 K}
 etaS  = 0.75
 
-# Define an array of empty states as objects
-cycle = [{},{},{},{}];
+# ## Process
 
-# Make a function for this specific fluid
+#- Define an empty array to add the cycle steps
+c = [];
+
+#- Make a function for this specific fluid
 p(desiredProperty, currentState) = props(desiredProperty, fluid, currentState);
 
-# Define low and high pressure
+#- Define low and high pressure
 pLow  = p('P', {T: evap.T, Q: 100%});
 pHigh = p('P', {T: cond.T, Q: 0%  });
 
 # 4 to 1 Evaporation
-cycle[1].P = pLow;
-cycle[1].T = evap.T+ evap.superHeating;
-cycle[1].D = p('D', cycle[1]);
-cycle[1].H = p('H', cycle[1]);
-cycle[1].S = p('S', cycle[1]);
+c[1] = {};
+c[1].P = pLow;
+c[1].T = evap.T+ evap.superHeating;
+c[1].D = p('D', c[1]);
+c[1].H = p('H', c[1]);
+c[1].S = p('S', c[1]);
+c[1]
 
 # 1 to 2 Compression of vapor
-cycle[2].P = pHigh;
-H_i        = p('H',{P:cycle[2].P, S:cycle[1].S});
-cycle[2].H = (H_i-cycle[1].H)/etaS + cycle[1].H;
-cycle[2].T = p('T', cycle[2]);
-cycle[2].D = p('D', cycle[2]);
-cycle[2].S = p('S', cycle[2]);
-
+c[2] = {};
+c[2].P = pHigh;
+H_i        = p('H',{P:c[2].P, S:c[1].S});
+c[2].H = (H_i-c[1].H)/etaS + c[1].H;
+c[2].T = p('T', c[2]);
+c[2].D = p('D', c[2]);
+c[2].S = p('S', c[2]);
+c[2]
 
 # 2 to 3 Condensation
-cycle[3].P = cycle[2].P - cond.P_drop;
-cycle[3].T = cond.T-cond.subCooling;
-cycle[3].D = p('D', cycle[3]);
-cycle[3].H = p('H', cycle[3]);
-cycle[3].S = p('S', cycle[3]);
+c[3] = {};
+c[3].P = c[2].P - cond.P_drop;
+c[3].T = cond.T-cond.subCooling;
+c[3].D = p('D', c[3]);
+c[3].H = p('H', c[3]);
+c[3].S = p('S', c[3]);
+c[3]
 
 # 3 to 4 Expansion
-cycle[4].H = cycle[3].H;
-cycle[4].P = cycle[1].P + evap.P_drop;
-cycle[4].T = p('T', cycle[4]);
-cycle[4].D = p('D', cycle[4]);
-cycle[4].S = p('S', cycle[4]);
+c[4] = {};
+c[4].H = c[3].H;
+c[4].P = c[1].P + evap.P_drop;
+c[4].T = p('T', c[4]);
+c[4].D = p('D', c[4]);
+c[4].S = p('S', c[4]);
+c[4]
 
+# ## Work, Energy and Performance
+# $W_{comp}$
+W_comp   = mDot*(c[2].H - c[1].H)
 
-# Work, Energy and Performance
-W_comp   = mDot*(cycle[2].H - cycle[1].H);
-Q_h      = mDot*(cycle[2].H - cycle[3].H);
-Q_c      = mDot*(cycle[1].H - cycle[4].H);
+# $Q_h$
+Q_h      = mDot*(c[2].H - c[3].H)
+# $Q_c$
+Q_c      = mDot*(c[1].H - c[4].H)
 
-evap_COP = Q_c/W_comp;
-cond_COP = Q_h/W_comp;
+# $COP_{evaporator}$
+evap_COP = Q_c/W_comp
 
-# Display results
+# $COP_{condenser}$
+cond_COP = Q_h/W_comp
+
+# # Final results
 
 print('Compressor power   : $0 \t$1\t$2', W_comp to [W, BTU/h, TR], 4)
 print('Condenser heat out : $0 \t$1\t$2', Q_h    to [W, BTU/h, TR], 4)
