@@ -1,5 +1,4 @@
-# CoolPropJavascriptDemo
-
+# Web Thermodynamics
 This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
 
 # Basic example
@@ -25,7 +24,7 @@ On this example we mix the putouts with **markdown** and equations with **latex*
 
 Open this link:
 
-https://dvd101x.github.io/CoolPropJavascriptDemo/
+https://dvd101x.github.io/web-thermodynamics/
 
 # How does it work
 
