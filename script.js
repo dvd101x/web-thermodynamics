@@ -23,17 +23,6 @@ const example = [
     "HAprops('T', {P:1 atm, H:h, R:1.0})"
 ]
 
-// maps a function if needed
-function mapped(f, x) {
-  return math.sum(math.size(x)) > 0 ? math.map(x, f) : f(x)
-}
-
-// maps a function if for the case of log
-function mapLog(x, ...args) {
-  const base = args.length == 0 ? math.e : args[0]
-  return math.sum(math.size(x)) > 0 ? math.map(x, x => math.log(x, base)) : math.log(x, base)
-}
-
 // consistently gets the size of an array, matrix or scalar as an array
 sizeAsArray = (x) => (math.isMatrix(x) | isScalar(x)) ? math.size(x).toArray() : math.size(x)
 
@@ -134,46 +123,119 @@ mat.import({
   subtract: (...Ms) => math.subtract(...broadcast_matrices(...Ms)),
   dotMultiply: (...Ms) => math.dotMultiply(...broadcast_matrices(...Ms)),
   dotDivide: (...Ms) => math.dotDivide(...broadcast_matrices(...Ms)),
+},{override:true})
+
+mat.import({
   props,
   HAprops,
   phase,
-  exp: x => mapped(math.exp, x),
-  log: mapLog, // log 
-  gamma: x=> mapped(math.gamma, x),
-  square: x=> mapped(math.square, x),
-  sin: x => mapped(math.sin, x),
-  cos: x => mapped(math.cos, x),
-  cube: x => mapped(math.cube, x),
-  //cbrt: x => mapped(math.cbrt, x),
-  cbrt: x => mapped(x2 => math.cbrt(x2), x),  // this is a temporary fix as cbrt doesn't work with map
-  acos: x => mapped(math.acos, x),
-  acosh: x => mapped(math.acosh, x),
-  acot: x => mapped(math.acot, x),
-  acoth: x => mapped(math.acoth, x),
-  acsc: x => mapped(math.acsc, x),
-  acsch: x => mapped(math.acsch, x),
-  asec: x => mapped(math.asec, x),
-  asech: x => mapped(math.asech, x),
-  asin: x => mapped(math.asin, x),
-  asinh: x => mapped(math.asinh, x),
-  atan: x => mapped(math.atan, x),
-  atanh: x => mapped(math.atanh, x),
-  cosh: x => mapped(math.cosh, x),
-  cot: x => mapped(math.cot, x),
-  coth: x => mapped(math.coth, x),
-  csc: x => mapped(math.csc, x),
-  csch: x => mapped(math.csch, x),
-  sec: x => mapped(math.sec, x),  
-  //'atan2(1:10, 1:10)', already works it hasn't lost it's vectorization
-  sech: x => mapped(math.sech, x),
-  sin: x => mapped(math.sin, x),
-  sinh: x => mapped(math.sinh, x),
-  tan: x => mapped(math.tan, x),
-  tanh: x => mapped(math.tanh, x)
+  exp: math.typed({
+    'Array | Matrix': x => math.map(x, math.exp)
+  }),
+  log: math.typed({
+    'Array | Matrix': x => math.map(x, x1 => math.log(x1, math.e)),
+    'Array | Matrix, number': (x, base) => math.map(x, x1 => math.log(x1, base))
+  }),
+  gamma: math.typed({
+    'Array | Matrix' : x => math.map(x, math.gamma)
+  }),
+  square: math.typed({
+    'Array | Matrix' : x => math.map(x, math.square)
+  }),
+  sqrt: math.typed({
+    'Array | Matrix' : x => math.map(x, math.sqrt)
+  }),
+  cube: math.typed({
+    'Array | Matrix' : x => math.map(x, math.cube)
+  }),
+  cbrt: math.typed({
+    // temporary fix until cbrt can't be mapped
+    'Array | Matrix' : x => math.map(x, x => math.cbrt(x))
+  }),
+  // trigonometrics [sin, cos, tan, csc, sec, cot]
+  sin: math.typed({
+    'Array | Matrix' : x => math.map(x, math.sin)
+  }),
+  cos: math.typed({
+    'Array | Matrix' : x => math.map(x, math.cos)
+  }),
+  tan: math.typed({
+    'Array | Matrix' : x => math.map(x, math.tan)
+  }),
+  csc: math.typed({
+    'Array | Matrix' : x => math.map(x, math.csc)
+  }),
+  sec: math.typed({
+    'Array | Matrix' : x => math.map(x, math.sec)  
+  }),
+  cot: math.typed({
+    'Array | Matrix' : x => math.map(x, math.cot)
+  }),
+
+  // trigonometrics hypberbolics [sinh, cosh, tanh, csch, sech, coth]
+  sinh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.sinh)
+  }),
+  cosh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.cosh)
+  }),
+  tanh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.tanh)
+  }),
+  csch: math.typed({
+    'Array | Matrix' : x => math.map(x, math.csch)
+  }),
+  sech: math.typed({
+    'Array | Matrix' : x => math.map(x, math.sech)  
+  }),
+  coth: math.typed({
+    'Array | Matrix' : x => math.map(x, math.coth)
+  }),
+
+  // trigonometrics arc [asin, acos, atan, acsc, asec, acot]
+  asin: math.typed({
+    'Array | Matrix' : x => math.map(x, math.asin)
+  }),
+  acos: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acos)
+  }),
+  atan: math.typed({
+    'Array | Matrix' : x => math.map(x, math.atan)
+  }),
+  acsc: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acsc)
+  }),
+  asec: math.typed({
+    'Array | Matrix' : x => math.map(x, math.asec)  
+  }),
+  acot: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acot)
+  }),
+
+  // trigonometrics arc hyperbolic [asinh, acosh, atanh, acsch, asech, acoth]
+    asinh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.asinh)
+  }),
+  acosh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acosh)
+  }),
+  atanh: math.typed({
+    'Array | Matrix' : x => math.map(x, math.atanh)
+  }),
+  acsch: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acsch)
+  }),
+  asech: math.typed({
+    'Array | Matrix' : x => math.map(x, math.asech)  
+  }),
+  acoth: math.typed({
+    'Array | Matrix' : x => math.map(x, math.acoth)
+  })
 },
            {
-             override:true}
+             override:false}
           )
+
 mat.createUnit('TR', '12e3 BTU/h')
 
 const parser = mat.parser()
