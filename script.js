@@ -23,10 +23,10 @@ const example = [
   "HAprops('T', {P:1 atm, H:h, R:1.0})"
 ]
 
-// consistently gets the size of an array, matrix or scalar as an array
+// checks if the size of a value corresponds to a scalar
 sizeOfScalar = (size) => math.sum(math.size(size)) === 0
 
-// checks if the size of a value corresponds to a scalar
+// consistently gets the size of an array, matrix or scalar as an array
 sizeAsArray = math.typed(
   'sizeAsArray',
   {
@@ -46,7 +46,7 @@ isScalar = math.typed(
 // aligns a shapte to a size in N dimensions
 alignShape = (shape, nDims, pad) => shape.length < nDims ? math.resize(shape.reverse(), [nDims], pad).reverse() : shape
 
-// in other words it appends 1 to the left as needed
+// calculates the shape needed to concat an array in a dimension
 shapeToConcat = (Mat, dim) => alignShape(sizeAsArray(Mat), dim, 1)
 
 // stretches a matrix up to a certain size on a dimensions
