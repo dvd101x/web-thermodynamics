@@ -1,6 +1,9 @@
 # Web Thermodynamics
 This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
 
+[![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
+)
+
 # Basic example
 
 It loads with three example expressions for each of the CoolProp functions available:
