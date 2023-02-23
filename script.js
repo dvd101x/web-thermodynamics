@@ -128,22 +128,27 @@ mat.import({
   dotMultiply: (...Ms) => broadcastedFunction(math.dotMultiply, ...Ms),
   dotDivide: (...Ms) => broadcastedFunction(math.dotDivide, ...Ms),
   dotPow: (...Ms) => broadcastedFunction(math.dotPow, ...Ms),
+  gcd: (...Ms) => broadcastedFunction(math.gcd, ...Ms),
+  mod: (...Ms) => broadcastedFunction(math.mod, ...Ms),
 
   // Bitwise functions
   bitAnd: (...Ms) => broadcastedFunction(math.bitAnd, ...Ms),
-  bitNot: (...Ms) => broadcastedFunction(math.bitNot, ...Ms),
   bitOr: (...Ms) => broadcastedFunction(math.bitOr, ...Ms),
   bitXor: (...Ms) => broadcastedFunction(math.bitXor, ...Ms),
+  leftShift: (...Ms) => broadcastedFunction(math.leftShift, ...Ms),
+  rightArithShift: (...Ms) => broadcastedFunction(math.rightArithShift, ...Ms),
+  rightLogShift: (...Ms) => broadcastedFunction(math.rightLogShift, ...Ms),
 
   // Loigical functions
   and: (...Ms) => broadcastedFunction(math.and, ...Ms),
-  not: (...Ms) => broadcastedFunction(math.not, ...Ms),
   or: (...Ms) => broadcastedFunction(math.or, ...Ms),
   xor: (...Ms) => broadcastedFunction(math.xor, ...Ms),
 
   // Relational functions
   compare: (...Ms) => broadcastedFunction(math.compare, ...Ms),
+  compareNatural: (...Ms) => broadcastedFunction(math.compareNatural, ...Ms),
   compareText: (...Ms) => broadcastedFunction(math.compareText, ...Ms),
+  compareUnits: (...Ms) => broadcastedFunction(math.compareUnits, ...Ms),
   deepEqual: (...Ms) => broadcastedFunction(math.deepEqual, ...Ms),
   equal: (...Ms) => broadcastedFunction(math.equal, ...Ms),
   equalText: (...Ms) => broadcastedFunction(math.equalText, ...Ms),
