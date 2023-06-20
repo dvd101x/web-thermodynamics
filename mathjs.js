@@ -25,26 +25,7 @@
     let identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
     let builtins = wordRegexp([
-      'compile', 'evaluate', 'help', 'parser', 'derivative', 'leafCount', 'lsolve', 'lsolveAll', 'lup',
-      'lusolve', 'qr', 'rationalize', 'resolve', 'simplify', 'simplifyConstant',
-      'simplifyCore', 'slu', 'symbolicEqual', 'usolve', 'usolveAll', 'abs', 'add', 'cbrt', 'ceil', 'cube',
-      'divide', 'dotDivide', 'dotMultiply', 'dotPow', 'exp', 'expm1', 'fix', 'floor', 'gcd', 'hypot', 'invmod',
-      'lcm', 'log', 'log10', 'log1p', 'log2', 'mod', 'multiply', 'norm', 'nthRoot', 'nthRoots', 'pow', 'round',
-      'sign', 'sqrt', 'square', 'subtract', 'unaryMinus', 'unaryPlus', 'xgcd', 'bitAnd', 'bitNot', 'bitOr', 'bitXor',
-      'leftShift', 'rightArithShift', 'rightLogShift', 'bellNumbers', 'catalan', 'composition', 'stirlingS2', 'arg',
-      'conj', 'im', 're', 'distance', 'intersect', 'and', 'not', 'or', 'xor', 'apply', 'column', 'concat', 'count',
-      'cross', 'ctranspose', 'det', 'diag', 'diff', 'dot', 'eigs', 'expm', 'fft', 'filter', 'flatten', 'forEach', 'getMatrixDataType',
-      'identity', 'ifft', 'inv', 'kron', 'map', 'matrixFromColumns', 'matrixFromFunction', 'matrixFromRows',
-      'ones', 'partitionSelect', 'pinv', 'range', 'reshape', 'resize', 'rotate', 'rotationMatrix', 'row', 'size',
-      'sort', 'sqrtm', 'squeeze', 'subset', 'trace', 'transpose', 'zeros', 'combinations', 'combinationsWithRep', 'factorial',
-      'gamma', 'kldivergence', 'lgamma', 'multinomial', 'permutations', 'pickRandom', 'random', 'randomInt',
-      'compare', 'compareNatural', 'compareText', 'deepEqual', 'equal', 'equalText', 'larger', 'largerEq', 'smaller',
-      'smallerEq', 'unequal', 'setCartesian', 'setDifference', 'setDistinct', 'setIntersect', 'setIsSubset', 'setMultiplicity',
-      'setPowerset', 'setSize', 'setSymDifference', 'setUnion', 'erf', 'cumsum', 'mad', 'max', 'mean', 'median',
-      'min', 'mode', 'prod', 'quantileSeq', 'std', 'sum', 'variance', 'bin', 'format', 'hex', 'oct', 'print', 'acos',
-      'acosh', 'acot', 'acoth', 'acsc', 'acsch', 'asec', 'asech', 'asin', 'asinh', 'atan', 'atan2', 'atanh', 'cos',
-      'cosh', 'cot', 'coth', 'csc', 'csch', 'sec', 'sech', 'sin', 'sinh', 'tan', 'tanh', 'to', 'clone',
-      'hasNumericValue', 'isInteger', 'isNaN', 'isNegative', 'isNumeric', 'isPositive', 'isPrime', 'isZero', 'numeric', 'typeOf',
+      "config", "abs", "acos", "acosh", "acot", "acoth", "acsc", "acsch", "add", "addScalar", "and", "arg", "asec", "asech", "asin", "asinh", "atan", "atan2", "atanh", "bellNumbers", "bignumber", "bin", "bitAnd", "bitNot", "bitOr", "bitXor", "boolean", "catalan", "cbrt", "ceil", "clone", "column", "combinations", "combinationsWithRep", "compare", "compareNatural", "compareText", "compile", "complex", "composition", "concat", "conj", "cos", "cosh", "cot", "coth", "count", "createUnit", "cross", "csc", "csch", "ctranspose", "cube", "cumsum", "deepEqual", "derivative", "det", "diag", "diff", "distance", "divide", "divideScalar", "dot", "dotDivide", "dotMultiply", "dotPow", "eigs", "equal", "equalScalar", "equalText", "erf", "evaluate", "exp", "expm", "expm1", "factorial", "fft", "filter", "fix", "flatten", "floor", "forEach", "format", "fraction", "gamma", "gcd", "getMatrixDataType", "hasNumericValue", "help", "hex", "hypot", "identity", "ifft", "im", "index", "intersect", "inv", "invmod", "isInteger", "isNaN", "isNegative", "isNumeric", "isPositive", "isPrime", "isZero", "kldivergence", "kron", "larger", "largerEq", "lcm", "leafCount", "leftShift", "lgamma", "log", "log10", "log1p", "log2", "lsolve", "lsolveAll", "lup", "lusolve", "lyap", "mad", "map", "matrix", "matrixFromColumns", "matrixFromFunction", "matrixFromRows", "max", "mean", "median", "min", "mod", "mode", "multinomial", "multiply", "multiplyScalar", "norm", "nthRoot", "nthRoots", "number", "numeric", "oct", "ones", "or", "parse", "parser", "partitionSelect", "permutations", "pickRandom", "pinv", "polynomialRoot", "pow", "print", "prod", "qr", "quantileSeq", "random", "randomInt", "range", "rationalize", "re", "replacer", "reshape", "resize", "resolve", "reviver", "rightArithShift", "rightLogShift", "rotate", "rotationMatrix", "round", "row", "schur", "sec", "sech", "setCartesian", "setDifference", "setDistinct", "setIntersect", "setIsSubset", "setMultiplicity", "setPowerset", "setSize", "setSymDifference", "setUnion", "sign", "simplify", "simplifyConstant", "simplifyCore", "sin", "sinh", "size", "slu", "smaller", "smallerEq", "sort", "sparse", "splitUnit", "sqrt", "sqrtm", "square", "squeeze", "std", "stirlingS2", "string", "subset", "subtract", "sum", "sylvester", "symbolicEqual", "tan", "tanh", "to", "trace", "transpose", "typeOf", "typed", "unaryMinus", "unaryPlus", "unequal", "unit", "usolve", "usolveAll", "variance", "xgcd", "xor", "zeros",
       "props", "phase", "HAprops"
     ]);
 
