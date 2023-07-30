@@ -44,11 +44,7 @@ mat.import({
   square: mapped(math.square),
   sqrt: mapped(math.sqrt),
   cube: mapped(math.cube),
-  cbrt: math.typed({
-    // temporary fix until cbrt can be mapped
-    'Array | Matrix' : X => math.map(X, x => math.cbrt(x)),
-    'Array | Matrix, boolean': (X, roots) => math.map(X, x => math.cbrt(x, roots))
-  }),
+  cbrt: mapped(math.cbrt),
   // trigonometrics [sin, cos, tan, csc, sec, cot]
   sin: mapped(math.sin),
   cos: mapped(math.cos),
@@ -83,9 +79,10 @@ mat.import({
 
   //atan2 already works, thus no need to do anything
 },
-           {
-             override:false}
-          )
+  {
+    override: false
+  }
+)
 
 mat.createUnit('TR', '12e3 BTU/h')
 
@@ -113,35 +110,35 @@ var editor = CodeMirror.fromTextArea(inputCode, {
 });
 
 editor.on("change", code => {
-    clearTimeout(timer);
-    timer = setTimeout(sendMath, wait, code);
+  clearTimeout(timer);
+  timer = setTimeout(sendMath, wait, code);
 });
 
 function math2str(x) {
-    return typeof x == "string" ? x : math.format(x, 14)
+  return typeof x == "string" ? x : math.format(x, 14)
 }
 
 function evalBlock(block) {
-    let mathResult
-    try {
-        mathResult = parser.evaluate(block)
-    } catch (error) {
-        return error.toString()
+  let mathResult
+  try {
+    mathResult = parser.evaluate(block)
+  } catch (error) {
+    return error.toString()
+  }
+  if (typeof mathResult != 'undefined') {
+    if (mathResult.entries) {
+      return mathResult.entries
+        .filter(x => typeof x != 'undefined')
+        .map(x => math2str(x)).join("\n")
     }
-    if (typeof mathResult != 'undefined') {
-        if (mathResult.entries) {
-            return mathResult.entries
-                .filter(x => typeof x != 'undefined')
-                .map(x => math2str(x)).join("\n")
-        }
-        else {
-            return math2str(mathResult)
-        }
+    else {
+      return math2str(mathResult)
     }
+  }
 }
 
-function evalBlocks(blocks){
-	return blocks.map(block=>evalBlock(block))
+function evalBlocks(blocks) {
+  return blocks.map(block => evalBlock(block))
 }
 
 const md = markdownit({ html: true })
@@ -151,59 +148,59 @@ const md = markdownit({ html: true })
     katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
   })
 
-  function makeDoc(code) {
-    const splitCode = code.split('\n');
-    const lineTypes = splitCode.map(line => line.startsWith('# ') ? 'md' : 'math');
-    let cells = [];
-    let lastType = '';
-    parser.clear()
-    splitCode
-      .forEach((line, lineNum) => {
-        if (lastType === lineTypes[lineNum]) {
-          cells[cells.length - 1].source.push(line)
-        }
-        else {
-          cells.push({ cell_type: lineTypes[lineNum], source: [line] })
-        }
-        lastType = lineTypes[lineNum]
-      })
-    let cleanCells = []
-    cells.forEach(x => {
-      if (x.cell_type === 'md') {
-        cleanCells.push({ cell_type: 'md', source: x.source.map(e => e.slice(2)) })
+function makeDoc(code) {
+  const splitCode = code.split('\n');
+  const lineTypes = splitCode.map(line => line.startsWith('# ') ? 'md' : 'math');
+  let cells = [];
+  let lastType = '';
+  parser.clear()
+  splitCode
+    .forEach((line, lineNum) => {
+      if (lastType === lineTypes[lineNum]) {
+        cells[cells.length - 1].source.push(line)
       }
       else {
-		const thereIsSomething = x.source.join('\n').trim();
-        if (thereIsSomething) {
-          cleanCells.push({ cell_type: 'math', source: x.source})
-        }
+        cells.push({ cell_type: lineTypes[lineNum], source: [line] })
       }
+      lastType = lineTypes[lineNum]
     })
-  
-    let output = [];
-  
-    const processOutput = {
-      math: mathCell => {
-		const blocks = mathCell.join('\n')
-			.split(/\n\s*\n/g)
-			.filter(x=>x.trim())
-        const results = evalBlocks(blocks)
-        return results
-			.filter(x=>x)
-			.map(
-			result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
-      },
-      md: markdown => md.render(markdown.join('\n'))
+  let cleanCells = []
+  cells.forEach(x => {
+    if (x.cell_type === 'md') {
+      cleanCells.push({ cell_type: 'md', source: x.source.map(e => e.slice(2)) })
     }
-  
-    cleanCells.forEach(
-      cell => output.push(processOutput[cell.cell_type](cell.source))
-    )
-    return output.join('\n')
+    else {
+      const thereIsSomething = x.source.join('\n').trim();
+      if (thereIsSomething) {
+        cleanCells.push({ cell_type: 'math', source: x.source })
+      }
+    }
+  })
+
+  let output = [];
+
+  const processOutput = {
+    math: mathCell => {
+      const blocks = mathCell.join('\n')
+        .split(/\n\s*\n/g)
+        .filter(x => x.trim())
+      const results = evalBlocks(blocks)
+      return results
+        .filter(x => x)
+        .map(
+          result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
+    },
+    md: markdown => md.render(markdown.join('\n'))
   }
+
+  cleanCells.forEach(
+    cell => output.push(processOutput[cell.cell_type](cell.source))
+  )
+  return output.join('\n')
+}
 
 const results = document.getElementById("output")
 
 function sendMath() {
-    results.innerHTML = makeDoc(editor.getValue());
+  results.innerHTML = makeDoc(editor.getValue());
 }
