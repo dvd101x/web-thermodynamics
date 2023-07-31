@@ -1,4 +1,4 @@
-const wait = 500;
+const wait = 300;
 
 const example = [
   "# # Examples of props",
