@@ -25,16 +25,32 @@
     let identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
     let builtins = wordRegexp(
-      // gets all functions in the parser
-      Object.keys(math).filter( x => typeof math[x] === 'function').filter(x => {
-        try{
-          return math.typeOf(math.evaluate(x)) === 'function'
-        }catch{
-          return false
-        }}));
+      Object.keys(math.expression.mathWithTransform)
+        .filter(mathFunction => !['expr', 'type'].includes(mathFunction))
+    );
 
     let keywords = wordRegexp(['to', 'in', 'and', 'not', 'or', 'xor', 'mod']);
 
+    // generates a list of all valid units in mathjs
+    const Unit = math.Unit
+    const baseUnits = Object.keys(Unit.UNITS)
+    const prefixesTypes = Unit.PREFIXES
+    const listOfUnits = baseUnits
+
+    for (const prefixType in prefixesTypes) {
+      for (const prefix in prefixesTypes[prefixType]) {
+        for (const baseUnit of baseUnits) {
+          const unit = prefix + baseUnit
+          if (!listOfUnits.includes(unit) && Unit.isValuelessUnit(unit)) {
+            listOfUnits.push(unit)
+          }
+        }
+      }
+    }
+
+    let units = wordRegexp(listOfUnits)
+
+    // physicalCOnstants taken from https://mathjs.org/docs/datatypes/units.html#physical-constants
     let physicalConstants = wordRegexp(
       [
         // Universal constants
@@ -53,8 +69,10 @@
         'atomicMass', 'avogadro', 'boltzmann', 'faraday', 'firstRadiation', 'loschmidt', 'gasConstant',
         'molarPlanckConstant', 'molarVolume', 'sackurTetrode', 'secondRadiation', 'stefanBoltzmann',
         'wienDisplacement',
+
         //Adopted Values
         'molarMass', 'molarMassC12', 'gravity', 'atm',
+
         //Natural Units
         'planckLength', 'planckMass', 'planckTime', 'planckCharge', 'planckTemperature'
       ]
@@ -110,7 +128,7 @@
         'null', 'phi', 'pi', 'PI', 'SQRT1_2', 'SQRT2', 'tau', 'undefined', 'version']
       ))) { return 'number'; };
 
-      
+
 
 
       // Handle Strings
@@ -120,7 +138,8 @@
       // Handle words
       if (stream.match(keywords)) { return 'keyword'; };
       if (stream.match(builtins)) { return 'builtin'; };
-      if (stream.match(physicalConstants)) {return 'tag'; };
+      if (stream.match(physicalConstants)) { return 'tag'; };
+      if (stream.match(units)) { return 'attribute'; };
       if (stream.match(identifiers)) { return 'variable'; };
 
       if (stream.match(singleOperators) || stream.match(doubleOperators)) { return 'operator'; };
