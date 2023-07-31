@@ -24,16 +24,14 @@
     let expressionEnd = new RegExp("^[\\]\\)]");
     let identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
-    let builtins = wordRegexp([
+    let builtins = wordRegexp(
       // gets all functions in the parser
-      ...Object.keys(math).filter( x => typeof math[x] === 'function').filter(x => {
+      Object.keys(math).filter( x => typeof math[x] === 'function').filter(x => {
         try{
           return math.typeOf(math.evaluate(x)) === 'function'
         }catch{
           return false
-        }}),
-      "props", "phase", "HAprops"
-    ]);
+        }}));
 
     let keywords = wordRegexp(['to', 'in', 'and', 'not', 'or', 'xor', 'mod']);
 

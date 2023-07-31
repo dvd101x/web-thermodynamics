@@ -23,38 +23,7 @@ const example = [
   "HAprops('T', {P:1 atm, H:h, R:1.0})"
 ]
 
-const mat = math.create()
-
-function mapped(f) {
-  return math.typed({
-    'Array | Matrix': X => math.map(X, x => f(x))
-  })
-}
-
-const functionsToVectorize =
-  // at some point mathjs lost vectorization of these functions, this is an attempt to add the function back
-  ["exp", "gamma", "square", "sqrt", "cube", "cbrt", "sin", "cos", "tan", "csc", "sec", "cot", "sinh", "cosh",
-    "tanh", "csch", "sech", "coth", "asin", "acos", "atan", "acsc", "asec", "acot", "asinh", "acosh", "atanh",
-    "acsch", "asech"]
-
-mat.import(
-  {
-    ...Object.fromEntries(functionsToVectorize.map(f => [f, mapped(math[f])])),
-    log: math.typed({
-      'Array | Matrix': x => math.map(x, x1 => math.log(x1, math.e)),
-      'Array | Matrix, number': (x, base) => math.map(x, x1 => math.log(x1, base))
-    })
-  }
-  , { override: false })
-
-mat.import(
-  { props, HAprops, phase },
-  { override: false }
-)
-
-mat.createUnit('TR', '12e3 BTU/h')
-
-const parser = mat.parser()
+const parser = math.parser()
 const inputCode = document.getElementById('editor')
 inputCode.value = example.join('\n');
 let timer;
