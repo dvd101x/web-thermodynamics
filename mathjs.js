@@ -32,23 +32,15 @@
     let keywords = wordRegexp(['to', 'in', 'and', 'not', 'or', 'xor', 'mod']);
 
     // generates a list of all valid units in mathjs
-    const Unit = math.Unit
-    const baseUnits = Object.keys(Unit.UNITS)
-    const prefixesTypes = Unit.PREFIXES
-    const listOfUnits = baseUnits
-
-    for (const prefixType in prefixesTypes) {
-      for (const prefix in prefixesTypes[prefixType]) {
-        for (const baseUnit of baseUnits) {
-          const unit = prefix + baseUnit
-          if (!listOfUnits.includes(unit) && Unit.isValuelessUnit(unit)) {
-            listOfUnits.push(unit)
-          }
-        }
+    let listOfUnits = []
+    for (const unit in math.Unit.UNITS) {
+      for (const prefix in math.Unit.UNITS[unit].prefixes) {
+        listOfUnits.push(prefix + unit)
       }
     }
 
-    let units = wordRegexp(listOfUnits)
+    // remove duplicates
+    let units = wordRegexp(Array.from(new Set(listOfUnits)))
 
     // physicalCOnstants taken from https://mathjs.org/docs/datatypes/units.html#physical-constants
     let physicalConstants = wordRegexp(
