@@ -6,11 +6,14 @@ function mapped(f) {
   })
 }
 
-const functionsToVectorize =
-  // at some point mathjs lost vectorization of these functions, this is an attempt to add the function back
-  ["exp", "gamma", "square", "sqrt", "cube", "cbrt", "sin", "cos", "tan", "csc", "sec", "cot", "sinh", "cosh",
-    "tanh", "csch", "sech", "coth", "asin", "acos", "atan", "acsc", "asec", "acot", "asinh", "acosh", "atanh",
-    "acsch", "asech"]
+// at some point mathjs lost vectorization of these functions, this is an attempt to add the function back
+const functionsToVectorize = [
+  "exp", "gamma", "square", "sqrt", "cube", "cbrt",
+  "sin", "cos", "tan", "csc", "sec", "cot",
+  "sinh", "cosh", "tanh", "csch", "sech", "coth",
+  "asin", "acos", "atan", "acsc", "asec", "acot",
+  "asinh", "acosh", "atanh", "acsch", "asech"
+]
 
 math.import(
   {
