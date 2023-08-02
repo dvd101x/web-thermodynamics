@@ -169,7 +169,7 @@ function evalBlock(block) {
   if (typeof mathResult !== 'undefined' && mathResult) {
     if (typeof mathResult === 'object') {
       if (mathResult.entries) {
-        if (typeof mathResult.entries === 'array') {
+        if (Array.isArray(mathResult.entries)) {
           return mathResult.entries
             .filter(x => typeof x != 'undefined')
             .map(x => math2str(x)).join("\n")
