@@ -16,11 +16,11 @@
       return new RegExp("^((" + words.join(")|(") + "))\\b");
     }
 
-    let singleOperators = new RegExp("^[\\+\\-\\*/&%|\\^~<>!@'\\\\]");
-    let singleDelimiters = new RegExp('^[\\(\\[\\{\\},:=;\\.]');
-    let doubleOperators = new RegExp("^((==)|(~=)|(<=)|(>=)|(<<)|(>>)|(\\.[\\+\\-\\*/\\^\\\\]))");
-    let doubleDelimiters = new RegExp("^((!=)|(\\+=)|(\\-=)|(\\*=)|(/=)|(&=)|(\\|=)|(\\^=))");
-    let tripleDelimiters = new RegExp("^((>>=)|(<<=))");
+    let singleOperators = new RegExp("^[\\+\\-\\*/&|\\^~<>!%']");
+    let singleDelimiters = new RegExp('^[\\(\\[\\{\\},:=;\\.?]');
+    let doubleOperators = new RegExp("^((==)|(!=)|(<=)|(>=)|(<<)|(>>)|(\\.[\\+\\-\\*/\\^]))");
+    let doubleDelimiters = new RegExp("^((!=)|(\^\\|))");
+    let tripleDelimiters = new RegExp("^((>>>)|(<<<))");
     let expressionEnd = new RegExp("^[\\]\\)]");
     let identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
