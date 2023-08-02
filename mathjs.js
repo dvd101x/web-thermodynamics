@@ -24,10 +24,24 @@
     let expressionEnd = new RegExp("^[\\]\\)]");
     let identifiers = new RegExp("^[_A-Za-z\xa1-\uffff][_A-Za-z0-9\xa1-\uffff]*");
 
-    let builtins = wordRegexp(
-      Object.keys(math.expression.mathWithTransform)
-        .filter(mathFunction => !['expr', 'type'].includes(mathFunction))
-    );
+    const mathFunctions = []
+    const mathPhysicalConstants = []
+    const mathIgnore = ['expr', 'type']
+    const numberLiterals = ['e', 'E', 'i', 'Infinity', 'LN2', 'LN10', 'LOG2E', 'LOG10E', 'NaN',
+    'null', 'phi', 'pi', 'PI', 'SQRT1_2', 'SQRT2', 'tau', 'undefined', 'version']
+
+    // based on https://github.com/josdejong/mathjs/blob/develop/bin/cli.js
+    for (const expression in math.expression.mathWithTransform) {
+      if (!mathIgnore.includes(expression)) {
+        if (typeof math[expression] === "function") {
+          mathFunctions.push(expression)
+        } else if(!numberLiterals.includes(expression)) {
+          mathPhysicalConstants.push(expression)
+        }
+      }
+    }
+
+    let builtins = wordRegexp(mathFunctions);
 
     let keywords = wordRegexp(['to', 'in', 'and', 'not', 'or', 'xor', 'mod']);
 
@@ -42,33 +56,8 @@
     // remove duplicates
     let units = wordRegexp(Array.from(new Set(listOfUnits)))
 
-    // physicalCOnstants taken from https://mathjs.org/docs/datatypes/units.html#physical-constants
-    let physicalConstants = wordRegexp(
-      [
-        // Universal constants
-        'speedOfLight', 'gravitationConstant', 'planckConstant', 'reducedPlanckConstant',
-
-        // Electromagnetic constants
-        'magneticConstant', 'electricConstant', 'vacuumImpedance', 'coulomb', 'elementaryCharge', 'bohrMagneton',
-        'conductanceQuantum', 'inverseConductanceQuantum', 'magneticFluxQuantum', 'nuclearMagneton', 'klitzing',
-
-        //Atomic and nuclear constants
-        'bohrRadius', 'classicalElectronRadius', 'electronMass', 'fermiCoupling', 'fineStructure', 'hartreeEnergy',
-        'protonMass', 'deuteronMass', 'neutronMass', 'quantumOfCirculation', 'rydberg', 'thomsonCrossSection',
-        'weakMixingAngle', 'efimovFactor',
-
-        //Physico-chemical constants
-        'atomicMass', 'avogadro', 'boltzmann', 'faraday', 'firstRadiation', 'loschmidt', 'gasConstant',
-        'molarPlanckConstant', 'molarVolume', 'sackurTetrode', 'secondRadiation', 'stefanBoltzmann',
-        'wienDisplacement',
-
-        //Adopted Values
-        'molarMass', 'molarMassC12', 'gravity', 'atm',
-
-        //Natural Units
-        'planckLength', 'planckMass', 'planckTime', 'planckCharge', 'planckTemperature'
-      ]
-    )
+    // physicalCOnstants https://mathjs.org/docs/datatypes/units.html#physical-constants
+    let physicalConstants = wordRegexp(mathPhysicalConstants)
 
     // tokenizers
     function tokenTranspose(stream, state) {
@@ -116,9 +105,7 @@
         if (stream.match(/^[+-]?\d*\.\d+([EeDd][+-]?\d+)?[ij]?/)) { return 'number'; };
         if (stream.match(/^[+-]?\d+([EeDd][+-]?\d+)?[ij]?/)) { return 'number'; };
       }
-      if (stream.match(wordRegexp(['e', 'E', 'i', 'Infinity', 'LN2', 'LN10', 'LOG2E', 'LOG10E', 'NaN',
-        'null', 'phi', 'pi', 'PI', 'SQRT1_2', 'SQRT2', 'tau', 'undefined', 'version']
-      ))) { return 'number'; };
+      if (stream.match(wordRegexp(numberLiterals))) { return 'number'; };
 
 
 
