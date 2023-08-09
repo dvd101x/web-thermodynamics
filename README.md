@@ -160,16 +160,16 @@ c = [];
 p(desiredProperty, currentState) = props(desiredProperty, fluid, currentState);
 
 #- Define low and high pressure
-pLow  = p('P', {T: evap.T, Q: 100%});
-pHigh = p('P', {T: cond.T, Q: 0%  });
+pLow  = p('P', {'T|gas': evap.T, Q: 100%});
+pHigh = p('P', {'T|liquid': cond.T, Q: 0%  });
 
 # 4 to 1 Evaporation
 c[1] = {};
 c[1].P = pLow;
 c[1].T = evap.T+ evap.superHeating;
-c[1].D = p('D', c[1]);
-c[1].H = p('H', c[1]);
-c[1].S = p('S', c[1]);
+c[1].D = p('D', {'T|gas':c[1].T, P:c[1].P});
+c[1].H = p('H', {'T|gas':c[1].T, P:c[1].P});
+c[1].S = p('S', {'T|gas':c[1].T, P:c[1].P});
 c[1]
 
 # 1 to 2 Compression of vapor
@@ -186,9 +186,9 @@ c[2]
 c[3] = {};
 c[3].P = c[2].P - cond.P_drop;
 c[3].T = cond.T-cond.subCooling;
-c[3].D = p('D', c[3]);
-c[3].H = p('H', c[3]);
-c[3].S = p('S', c[3]);
+c[3].D = p('D', {'T|liquid':c[3].T, P:c[3].P});
+c[3].H = p('H', {'T|liquid':c[3].T, P:c[3].P});
+c[3].S = p('S', {'T|liquid':c[3].T, P:c[3].P});
 c[3]
 
 # 3 to 4 Expansion
