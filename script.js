@@ -166,25 +166,16 @@ function evalBlock(block) {
   } catch (error) {
     return error.toString()
   }
-  if (typeof mathResult !== 'undefined' && mathResult) {
-    if (typeof mathResult === 'object') {
-      if (mathResult.entries) {
-        if (Array.isArray(mathResult.entries)) {
-          return mathResult.entries
-            .filter(x => typeof x != 'undefined')
-            .map(x => math2str(x)).join("\n")
-        } else {
-          return math2str(mathResult.entries)
-        }
-      } else {
-        return math2str(mathResult)
-      }
-    }
-    else {
-      return math2str(mathResult)
+  if (mathResult && typeof mathResult !== 'undefined' && typeof mathResult === 'object') {
+    if (mathResult.entries && Array.isArray(mathResult.entries)) {
+      return mathResult.entries
+        .filter(x => typeof x !== 'undefined')
+        .map(x => math2str(x)).join("\n")
     }
   }
+  return math2str(mathResult)
 }
+
 
 function evalBlocks(blocks) {
   return blocks.map(block => evalBlock(block))
@@ -232,10 +223,10 @@ function makeDoc(code) {
     math: mathCell => {
       const blocks = mathCell.join('\n')
         .split(/\n\s*\n/g)
-        .filter(x => x.trim())
+        .filter(x => x.trim().length > 0)
       const results = evalBlocks(blocks)
       return results
-        .filter(x => x)
+        .filter(x => typeof x !== 'undefined')
         .map(
           result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
     },
