@@ -1,3 +1,19 @@
+# Todo
+
+- [x] Validate it can import coolprop in a worker
+- [x] Math setup
+- [x] Import coolprop to math
+- [x] Basic functionality
+- [x] Make document
+- [x] Markdown
+- [x] Split into modules
+- [ ] Works with CM6
+- [ ] Syntax
+- [ ] Autocomplete
+- [ ] Scope
+- [ ] Match inputs and outputs
+- [ ] More steps
+
 # Web Thermodynamics
 This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
 

@@ -1,3 +1,5 @@
+import {number, unit} from 'mathjs'
+
 // List of units from coolprop
 const propUnit = {
   '': '',
@@ -253,12 +255,12 @@ function calcPropUnits(prop) {
   }
 }
 
-// This is created only bacuse math.number(value,'') is not valid as '' can't be the unit
-toValue = (v, u) => u ? math.number(v, u) : math.number(v)
-// This is crate only becous math.unit(value,'') is not valid as '' can't be the unit
-toUnit = (v, u) => u ? math.unit(v, u) : math.unit(v)
+// This is created only because number(value,'') is not valid as '' can't be the unit
+const toValue = (v, u) => u ? number(v, u) : number(v)
+// This is crate only because unit(value,'') is not valid as '' can't be the unit
+const toUnit = (v, u) => u ? unit(v, u) : unit(v)
 
-function props(desiredProperty, fluidName, fluidProperties) {
+export function props(desiredProperty, fluidName, fluidProperties) {
   const calcPropUnit = calcPropUnits(desiredProperty)
   let prop  = Object.keys(fluidProperties).slice(0,2)
   let value = Object.values(fluidProperties).slice(0,2)
@@ -280,7 +282,7 @@ function props(desiredProperty, fluidName, fluidProperties) {
   return toUnit(calcValue, calcPropUnit)
 }
 
-function HAprops(calcProp, fluidProperties) {
+export function HAprops(calcProp, fluidProperties) {
   const calcPropUnit = HApropUnit[calcProp]
   const arrayProperties = Object.entries(fluidProperties)
 
@@ -304,7 +306,7 @@ function HAprops(calcProp, fluidProperties) {
   return toUnit(calcValue, calcPropUnit)
 }
 
-function phase(fluid, fluidProperties) {
+export function phase(fluid, fluidProperties) {
   return phases[props('Phase',
     fluid,
     fluidProperties)]
