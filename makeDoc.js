@@ -1,22 +1,26 @@
+// Math calculations
 import math from './mathSetup.js'
-import 'katex/dist/katex.min.css'
-import katex from 'katex'
 
+// Formating and css
+import 'github-markdown-css/github-markdown-light.css'
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
 import 'markdown-it-texmath/css/texmath.css'
 import texmath from 'markdown-it-texmath'
-
 import markdownit from 'markdown-it'
 
 export default makeDoc
 
+// Setup markdown
 const md = markdownit({ html: true })
-.use(texmath, {
-    engine: katex,
-    delimiters: ['dollars', 'beg_end'],
-    katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
-})
-const parser = math.parser()
+    .use(texmath, {
+        engine: katex,
+        delimiters: ['dollars', 'beg_end'],
+        katexOptions: { macros: { "\\RR": "\\mathbb{R}" } }
+    })
 
+// Setup math parser
+const parser = math.parser()
 
 function math2str(x) {
     return typeof x == "string" ? x : math.format(x, 14)

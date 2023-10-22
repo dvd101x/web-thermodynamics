@@ -1,11 +1,14 @@
 import './style.css'
+
 import Alpine from 'alpinejs'
 import makeDoc from './makeDoc.js'
+
 
 const example = [
   "# # Examples of props",
   "# ",
-  "# *Density* $\\frac{kg}{m^3}$ of **nitrogen** at a *temperature* **25 °C** and a *pressure* **1 atmosphere**:",
+  "# *Density* $\\frac{kg}{m^3}$ of **nitrogen** at a *temperature* **25 °C** " ,
+  "# and a *pressure* **1 atmosphere**:",
   "props('D', 'Nitrogen', {T:25 degC, P:1 atm})",
   "",
   "# Saturated vapor enthalpy $\\frac{J}{kg}$ of **R134a** at **25 °C**",

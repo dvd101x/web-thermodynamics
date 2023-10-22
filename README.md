@@ -10,7 +10,7 @@
 - [ ] Works with CM6
 - [ ] Syntax
 - [ ] Autocomplete
-- [ ] Scope
+- [ ] Think about a way to use partial previous results
 - [ ] Match inputs and outputs
 - [ ] More steps
 
