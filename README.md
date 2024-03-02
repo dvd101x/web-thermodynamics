@@ -11,6 +11,15 @@ This is an example of how to run CoolProp Javascript wrapper with units handled 
 [![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
 )
 
+# To-Do
+- [ ] Migrate to codemirror 6 with a build tool like Vite
+- [ ] Migrate the language definition to CM6
+- [ ] Scroll outputs into view and highlight them
+- [ ] Not only text outputs (allow for latex)
+- [ ] More efficient math evaluation (only update state when inputs change)
+- [ ] Evaluate expression by expression (not necessarly block by block)
+- [ ] Use Alpinejs to reduce code
+
 # Basic example
 
 It loads with three example expressions for each of the CoolProp functions available:
