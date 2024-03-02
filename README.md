@@ -1,22 +1,12 @@
 # Todo
 
-- [x] Validate it can import coolprop in a worker
-- [x] Math setup
-- [x] Import coolprop to math
-- [x] Basic functionality
-- [x] Make document
-- [x] Markdown
-- [x] Split into modules
-- [x] Works with CM6
-- [x] Syntax
-- [x] Autocomplete
 - [ ] Include previous partial results
-- [x] Match inputs and outputs
 - [ ] More interesting example
-- [ ] Autocomplete dynamic with var names
+- [ ] Dynamic autocomplete with variable names and mathjs units
 
 # Web Thermodynamics
-This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs including a code editor.
+
+This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs, including a code editor.
 
 [![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
 )
@@ -234,12 +224,12 @@ cond_COP = Q_h/W_comp
 
 # # Final results
 
-print('Compressor power   : $0 \t$1\t$2', W_comp to [W, BTU/h, TR], 4)
-print('Condenser heat out : $0 \t$1\t$2', Q_h    to [W, BTU/h, TR], 4)
-print('Evaporator heat in : $0 \t$1\t$2', Q_c    to [W, BTU/h, TR], 4)
+print('Compressor power   : $1 \t$2\t$3', W_comp to [W, BTU/h, TR], 4)
+print('Condenser heat out : $1 \t$2\t$3', Q_h    to [W, BTU/h, TR], 4)
+print('Evaporator heat in : $1 \t$2\t$3', Q_c    to [W, BTU/h, TR], 4)
 
-print('COP(cooling)       : $0', [evap_COP], 3)
-print('COP(heating)       : $0', [cond_COP], 3)
+print('COP(cooling)       : $1', [evap_COP], 3)
+print('COP(heating)       : $1', [cond_COP], 3)
 ```
 Shall return:
 
@@ -261,7 +251,7 @@ COP(heating)       : 3.57
 Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engineering-Solver) that includes additional features:
 
 * Saves in the browser (you can continue where you left off)
-* 9 workspaces, so you can try different things
+* 20 workspaces, so you can try different things
 * Uses a webworker to avoid freezing during big calculaitons
 * A few more examples focused on the many features of mathjs
 
@@ -273,7 +263,7 @@ Uses the following js libraries
   * [Mathjs](https://mathjs.org/)
   * [CoolProp](http://www.coolprop.org/)
 * Editing
-  * [CodeMirror 5](https://codemirror.net/5/)
+  * [CodeMirror](https://codemirror.net/)
 * Rendering results
   * [Markdown-it](https://github.com/markdown-it/markdown-it)
   * [markdown-it-katex](https://github.com/waylonflinn/markdown-it-katex)
