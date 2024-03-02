@@ -1,9 +1,3 @@
-# Todo
-
-- [ ] Include previous partial results
-- [ ] More interesting example
-- [ ] Dynamic autocomplete with variable names and mathjs units
-
 # Web Thermodynamics
 
 This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs, including a code editor.
@@ -12,13 +6,14 @@ This is an example of how to run CoolProp Javascript wrapper with units handled 
 )
 
 # To-Do
-- [ ] Migrate to codemirror 6 with a build tool like Vite
+- [x] Migrate to codemirror 6 with a build tool like Vite
 - [ ] Migrate the language definition to CM6
-- [ ] Scroll outputs into view and highlight them
-- [ ] Not only text outputs (allow for latex)
+- [x] Scroll outputs into view and highlight them
+- [x] Not only text outputs (allow for latex)
 - [ ] More efficient math evaluation (only update state when inputs change)
 - [ ] Evaluate expression by expression (not necessarly block by block)
-- [ ] Use Alpinejs to reduce code
+- [x] Use Alpinejs to reduce code
+- [ ] Dynamic autocomplete
 
 # Basic example
 
