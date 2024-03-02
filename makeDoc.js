@@ -9,6 +9,10 @@ import 'markdown-it-texmath/css/texmath.css'
 import texmath from 'markdown-it-texmath'
 import markdownit from 'markdown-it'
 
+import getExpressions from './getExpressions.js'
+
+const digits = 14
+
 export default makeDoc
 
 // Setup markdown
@@ -22,79 +26,103 @@ const md = markdownit({ html: true })
 // Setup math parser
 const parser = math.parser()
 
-function math2str(x) {
-    return typeof x == "string" ? x : math.format(x, 14)
-}
-
-function evalBlock(block) {
-    let mathResult
-    try {
-        mathResult = parser.evaluate(block)
-    } catch (error) {
-        return error.toString()
-    }
-    if (mathResult && typeof mathResult !== 'undefined' && typeof mathResult === 'object') {
-        if (mathResult.entries && Array.isArray(mathResult.entries)) {
-            return mathResult.entries
-                .filter(x => typeof x !== 'undefined')
-                .map(x => math2str(x)).join("\n")
-        }
-    }
-    return math2str(mathResult)
-}
-
-
-function evalBlocks(blocks) {
-    return blocks.map(block => evalBlock(block))
-}
-
 function makeDoc(code) {
     const splitCode = code.split('\n');
     const lineTypes = splitCode.map(line => line.startsWith('# ') ? 'md' : 'math');
     let cells = [];
     let lastType = '';
     parser.clear()
+
+    // {from, to, source, outputs, visible, type}
     splitCode
         .forEach((line, lineNum) => {
+            const thisCell = cells.length - 1
             if (lastType === lineTypes[lineNum]) {
-                cells[cells.length - 1].source.push(line)
+                cells[thisCell].source.push(line)
+                cells[thisCell].to = lineNum
             }
             else {
-                cells.push({ cell_type: lineTypes[lineNum], source: [line] })
+                cells.push({ from: lineNum, cell_type: lineTypes[lineNum], source: [line] })
             }
             lastType = lineTypes[lineNum]
         })
-    let cleanCells = []
-    cells.forEach(x => {
-        if (x.cell_type === 'md') {
-            cleanCells.push({ cell_type: 'md', source: x.source.map(e => e.slice(2)) })
+
+    const outputCells = [];
+    cells.forEach(cell => {
+        if (cell.cell_type === 'md') {
+            const mdCode = cell.source.map(line => line.slice(2)).join('\n')
+            const mdRender = md.render(mdCode)
+            outputCells.push({ ...cell, visible: true, outputs: mdRender })
         }
         else {
-            const thereIsSomething = x.source.join('\n').trim();
-            if (thereIsSomething) {
-                cleanCells.push({ cell_type: 'math', source: x.source })
-            }
+            const mathResults = processExpressions(getExpressions(cell.source.join('\n')))
+            mathResults.forEach(result => {
+                outputCells.push({
+                    from: cell.from + result.from,
+                    to: cell.from + result.to,
+                    source: cell.source,
+                    visible: result.visible, outputs: result.outputs
+                })
+            })
         }
     })
+    return outputCells
+}
 
-    let output = [];
-
-    const processOutput = {
-        math: mathCell => {
-            const blocks = mathCell.join('\n')
-                .split(/\n\s*\n/g)
-                .filter(x => x.trim().length > 0)
-            const results = evalBlocks(blocks)
-            return results
-                .filter(x => typeof x !== 'undefined')
-                .map(
-                    result => result.length ? '<pre>' + result + '</pre>' : '').join('\n')
-        },
-        md: markdown => md.render(markdown.join('\n'))
+/**
+ * Evaluates a given expression using a parser.
+ *
+ * @param {string} expression - The expression to evaluate.
+ * @returns {any} The result of the evaluation, or the error message if an error occurred.
+*/
+function calc(expression) {
+    let result
+    try {
+        result = parser.evaluate(expression)
+    } catch (error) {
+        result = error.toString()
     }
+    return result
+}
 
-    cleanCells.forEach(
-        cell => output.push(processOutput[cell.cell_type](cell.source))
+/**
+ * Formats result depending on the type of result
+ *
+ * @param {number, string, Help, any} result - The result to format
+ * @returns {string} The string in HTML with the formated result
+ */
+const formatResult = math.typed({
+    'number': result => math.format(result, { precision: digits }),
+    'string': result => `<code>${result}</code>`,
+    'Help': result => `<pre>${math.format(result)}</pre>`,
+    'any': math.typed.referTo(
+        'number',
+        fnumber => result => katex.renderToString(math.parse(fnumber(result)).toTex())
     )
-    return output.join('\n')
+})
+
+/**
+ * Processes an array of expressions by evaluating them, formatting the results,
+ * and determining their visibility.
+ *
+ * @param {Array<{from: number, to: number, source: string}>} expressions - An array of objects representing expressions,
+ *   where each object has `from`, `to`, and `source` properties.
+ * @returns {Array<{from: number, to: number, source: string, outputs: any, visible: boolean}>} An array of processed expressions,
+ *   where each object has additional `outputs` and `visible` properties.
+ */
+function processExpressions(expressions) {
+    return expressions.map(expression => {
+        const result = calc(expression.source)
+        const outputs = formatResult(result)
+        // Determine visibility based on the result type:
+        // - Undefined results are hidden.
+        // - Results with an `isResultSet` property are hidden when empty.
+        // - All other results are visible.
+        const visible = result === undefined ? false : (result.isResultSet && result.entries.length === 0) ? false : true
+        return ({
+            ...expression,
+            outputs,
+            visible
+        })
+    })
 }

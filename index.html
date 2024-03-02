@@ -9,8 +9,18 @@
   </head>
   <body>
     <main x-data="app">
-      <textarea id="editor" x-model="input" @input="output = calc(input)"></textarea>
-      <article id="output" class="markdown-body" x-html="output"></article>
+      <div id="editor" @doc-changed.camel.debounce="calcExpressions"
+      @selection-changed.camel="getCurrentLine"
+      ></div>
+      <article id="output" class="markdown-body">
+        <template x-for="expression in expressions">
+          <div class="results"
+            :class=" (currentLine >= expression.from) && (currentLine <= expression.to) ? 'highligted' : ''"
+            x-html="expression.outputs" x-show="expression.visible"
+            x-effect="if((currentLine >= expression.from) && (currentLine <= expression.to)) $el.scrollIntoView({ block: 'nearest', inline: 'start'})">
+        </div>
+        </template>
+      </article>
     </main>
     <script type="module" src="/main.js"></script>
   </body>

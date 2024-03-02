@@ -7,15 +7,16 @@
 - [x] Make document
 - [x] Markdown
 - [x] Split into modules
-- [ ] Works with CM6
-- [ ] Syntax
-- [ ] Autocomplete
-- [ ] Think about a way to use partial previous results
-- [ ] Match inputs and outputs
-- [ ] More steps
+- [x] Works with CM6
+- [x] Syntax
+- [x] Autocomplete
+- [ ] Include previous partial results
+- [x] Match inputs and outputs
+- [ ] More interesting example
+- [ ] Autocomplete dynamic with var names
 
 # Web Thermodynamics
-This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
+This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs including a code editor.
 
 [![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
 )
