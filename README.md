@@ -15,6 +15,21 @@ This is an example of how to run CoolProp Javascript wrapper with units handled 
 - [x] Use Alpinejs to reduce code
 - [ ] Dynamic autocomplete
 
+# Getting started
+
+Clone this repository and run the following command to install dependancies.
+```
+npm install
+```
+To test run
+```
+npm run dev
+````
+To build 
+````
+npm run build
+````
+ 
 # Basic example
 
 It loads with three example expressions for each of the CoolProp functions available:
