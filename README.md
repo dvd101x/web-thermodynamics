@@ -1,17 +1,19 @@
 # Web Thermodynamics
-This is a simple example of how to run CoolProp Javascript wrapper with units handled by mathjs.
+
+This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs, including a code editor.
 
 [![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
 )
 
 # To-Do
-- [ ] Migrate to codemirror 6 with a build tool like Vite
+- [x] Migrate to codemirror 6 with a build tool like Vite
 - [ ] Migrate the language definition to CM6
-- [ ] Scroll outputs into view and highlight them
-- [ ] Not only text outputs (allow for latex)
+- [x] Scroll outputs into view and highlight them
+- [x] Not only text outputs (allow for latex)
 - [ ] More efficient math evaluation (only update state when inputs change)
 - [ ] Evaluate expression by expression (not necessarly block by block)
-- [ ] Use Alpinejs to reduce code
+- [x] Use Alpinejs to reduce code
+- [ ] Dynamic autocomplete
 
 # Basic example
 
@@ -226,12 +228,12 @@ cond_COP = Q_h/W_comp
 
 # # Final results
 
-print('Compressor power   : $0 \t$1\t$2', W_comp to [W, BTU/h, TR], 4)
-print('Condenser heat out : $0 \t$1\t$2', Q_h    to [W, BTU/h, TR], 4)
-print('Evaporator heat in : $0 \t$1\t$2', Q_c    to [W, BTU/h, TR], 4)
+print('Compressor power   : $1 \t$2\t$3', W_comp to [W, BTU/h, TR], 4)
+print('Condenser heat out : $1 \t$2\t$3', Q_h    to [W, BTU/h, TR], 4)
+print('Evaporator heat in : $1 \t$2\t$3', Q_c    to [W, BTU/h, TR], 4)
 
-print('COP(cooling)       : $0', [evap_COP], 3)
-print('COP(heating)       : $0', [cond_COP], 3)
+print('COP(cooling)       : $1', [evap_COP], 3)
+print('COP(heating)       : $1', [cond_COP], 3)
 ```
 Shall return:
 
@@ -253,7 +255,7 @@ COP(heating)       : 3.57
 Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engineering-Solver) that includes additional features:
 
 * Saves in the browser (you can continue where you left off)
-* 9 workspaces, so you can try different things
+* 20 workspaces, so you can try different things
 * Uses a webworker to avoid freezing during big calculaitons
 * A few more examples focused on the many features of mathjs
 
@@ -265,7 +267,7 @@ Uses the following js libraries
   * [Mathjs](https://mathjs.org/)
   * [CoolProp](http://www.coolprop.org/)
 * Editing
-  * [CodeMirror 5](https://codemirror.net/5/)
+  * [CodeMirror](https://codemirror.net/)
 * Rendering results
   * [Markdown-it](https://github.com/markdown-it/markdown-it)
   * [markdown-it-katex](https://github.com/waylonflinn/markdown-it-katex)

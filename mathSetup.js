@@ -1,3 +1,7 @@
+import {create, all} from "mathjs"
+import {props, phase, HAprops} from './fluidProperties.js'
+const math = create(all)
+
 // this is a setup of mathjs that can use vectorized operations and thermodynamic properties
 
 function mapped(f) {
@@ -32,3 +36,5 @@ math.import(
 )
 
 math.createUnit('TR', '12e3 BTU/h')
+
+export default math

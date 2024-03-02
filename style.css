@@ -1,53 +1,54 @@
-html, body {
-  margin:0;
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+
+a:hover {
+  color: #535bf2;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
   height: 100vh;
   overflow: hidden;
 }
 
-.CodeMirror-focused .cm-matchhighlight {
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
-  background-position: bottom;
-  background-repeat: repeat-x;
-}
-
-.cm-matchhighlight {
-  background-color: rgba(144, 238, 144, 0.4)
-}
-
-.CodeMirror-selection-highlight-scrollbar {
-  background-color: rgba(0, 180, 0, 0.4)
+h1 {
+  line-height: 1.1;
 }
 
 body {
   display: flex;
-  overflow: hidden;
-  margin:0;
-  height: 100vh;
   flex-direction: column;
 }
 
-main{
+main {
   display: flex;
   overflow: hidden;
   flex: 1;
+  flex-direction: row;
 }
 
-main > div.CodeMirror{
-  flex:1;
-  height: auto;
+#editor {
+  flex: 1;
+  overflow: scroll;
 }
 
-main > article.markdown-body{
-  flex:1;
+#output {
+  flex: 1;
   overflow: auto;
   box-sizing: border-box;
-}
-
-main > .markdown-body {
+  margin: 0 auto;
+  padding: 1em;
   min-width: 200px;
   max-width: 980px;
-  overflow: scroll;
-  padding: 1em;
+}
+
+article.markdown-body>.highligted {
+  background-color: rgba(0, 150, 255, 0.2);
 }
 
 @media (max-width: 767px) {
