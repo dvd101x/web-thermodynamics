@@ -42,7 +42,7 @@ function makeDoc(code) {
                 cells[thisCell].to = lineNum
             }
             else {
-                cells.push({ from: lineNum, cell_type: lineTypes[lineNum], source: [line] })
+                cells.push({ from: lineNum, to:lineNum, cell_type: lineTypes[lineNum], source: [line] })
             }
             lastType = lineTypes[lineNum]
         })
