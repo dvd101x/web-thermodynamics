@@ -34,7 +34,12 @@ main {
 
 #editor {
   flex: 1;
-  overflow: scroll;
+  overflow-y: scroll;
+  display: flex;
+}
+
+#editor > div{
+  flex:1
 }
 
 #output {
