@@ -7,7 +7,6 @@ import 'katex/dist/katex.min.css'
 import Alpine from 'alpinejs'
 import makeDoc from './makeDoc.js'
 
-import { EditorState } from "@codemirror/state"
 import { EditorView, basicSetup } from "codemirror"
 import {
   StreamLanguage
@@ -45,7 +44,7 @@ const example = [
   "HAprops('T', {P:1 atm, H:h, R:1.0})"
 ]
 
-let startState = EditorState.create({
+const editor = new EditorView({
   doc: example.join('\n'),
   extensions: [
     basicSetup,
@@ -54,7 +53,7 @@ let startState = EditorState.create({
     EditorView.updateListener.of((update) => {
       if (update.docChanged) {
         editorDOM.dispatchEvent(docChanged)
-        if(update.selectionSet){
+        if (update.selectionSet) {
           editorDOM.dispatchEvent(selectionChanged)
         }
       } else if (update.selectionSet) {
@@ -62,10 +61,6 @@ let startState = EditorState.create({
       }
     })
   ],
-})
-
-const editor = new EditorView({
-  state: startState,
   parent: editorDOM,
   lineWrapping: true,
 })
@@ -75,7 +70,7 @@ window.Alpine = Alpine
 Alpine.data(
   'app',
   () => ({
-    expressions: makeDoc(editor.state.doc.toString()),
+    expressions: makeDoc("# # Type and get results - just like that!"),
     currentLine: 1,
     get calcExpressions() {
       this.expressions = makeDoc(editor.state.doc.toString())
