@@ -5,19 +5,9 @@ This is an example of how to run CoolProp Javascript wrapper with units handled 
 [![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
 )
 
-# To-Do
-- [x] Migrate to codemirror 6 with a build tool like Vite
-- [ ] Migrate the language definition to CM6
-- [x] Scroll outputs into view and highlight them
-- [x] Not only text outputs (allow for latex)
-- [ ] More efficient math evaluation (only update state when inputs change)
-- [ ] Evaluate expression by expression (not necessarly block by block)
-- [x] Use Alpinejs to reduce code
-- [ ] Dynamic autocomplete
-
 # Getting started
 
-Clone this repository and run the following command to install dependancies.
+Clone this repository and run the following command to install dependencies.
 ```
 npm install
 ```
@@ -47,7 +37,7 @@ It loads with three example expressions for each of the CoolProp functions avail
   50423.450391029 J / kg
   ```
 
-On this example we mix the putouts with **markdown** and equations with **latex** if we start the comment with a `# ` this is a nice way to make present the results including some input markdown.
+On this example we mix the outputs with **markdown** and equations with **latex** if we start the comment with a `# ` this is a nice way to make present the results including some input markdown.
 
 # Getting started
 
@@ -71,7 +61,7 @@ flowchart LR
 
 # Intermediate example
 
-This demo uses libraries with many capabilities. There are many conversions available for inputs and ouputs and the results can be stored on variables, arrays and objects to be used later.
+This demo uses libraries with many capabilities. There are many conversions available for inputs and outputs and the results can be stored on variables, arrays and objects to be used later.
 
 ``` python
 # Density of carbon dioxide at 100 bar and 25C in lbm/in^3
@@ -90,7 +80,7 @@ cycle = [{},{}];
 # Temperature of saturated air at the previous enthalpy
 cycle[1].T = HAprops('T', {P:1 atm, H:enthalpyDry, R:1.0})
 
-# Temperature of saturated air in farenheit
+# Temperature of saturated air in Fahrenheit
 cycle[2].T = HAprops('T', {H:enthalpyDry, R:1.0, P:1 atm}) to degF
 
 ```
@@ -160,7 +150,7 @@ twophase
 -7.7679894680327e-5 (J kg) / (kg K J)
 ```
 
-These concepts can be used to calculate complete thermodyinamic cycles.
+These concepts can be used to calculate complete thermodynamic cycles.
 
 ``` python
 # # Vapor compression cycle
@@ -271,10 +261,10 @@ Here is a similar project [Engineering-Solver](https://github.com/dvd101x/Engine
 
 * Saves in the browser (you can continue where you left off)
 * 20 workspaces, so you can try different things
-* Uses a webworker to avoid freezing during big calculaitons
+* Uses a webworker to avoid freezing during big calculations
 * A few more examples focused on the many features of mathjs
 
-# Dependancies
+# Dependencies
 
 Uses the following js libraries
 
@@ -287,6 +277,7 @@ Uses the following js libraries
   * [Markdown-it](https://github.com/markdown-it/markdown-it)
   * [markdown-it-katex](https://github.com/waylonflinn/markdown-it-katex)
   * [katex](https://katex.org/)
+  * [alpinejs](https://alpinejs.dev/)
 
 # References
 
