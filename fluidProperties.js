@@ -1,4 +1,4 @@
-import {number, unit} from 'mathjs'
+import { number, unit } from 'mathjs'
 
 // List of units from coolprop
 const propUnit = {
@@ -262,9 +262,9 @@ const toUnit = (v, u) => u ? unit(v, u) : unit(v)
 
 export function props(desiredProperty, fluidName, fluidProperties) {
   const calcPropUnit = calcPropUnits(desiredProperty)
-  let prop  = Object.keys(fluidProperties).slice(0,2)
-  let value = Object.values(fluidProperties).slice(0,2)
-  
+  let prop = Object.keys(fluidProperties).slice(0, 2)
+  let value = Object.values(fluidProperties).slice(0, 2)
+
   if (prop.length > 0) {
     const units = [propUnit[subProp(prop[0])], propUnit[subProp(prop[1])]]
     value = [toValue(value[0], units[0]), toValue(value[1], units[1])]

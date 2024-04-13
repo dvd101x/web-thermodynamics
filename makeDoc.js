@@ -42,7 +42,7 @@ function makeDoc(code) {
                 cells[thisCell].to = lineNum
             }
             else {
-                cells.push({ from: lineNum, to:lineNum, cell_type: lineTypes[lineNum], source: [line] })
+                cells.push({ from: lineNum, to: lineNum, cell_type: lineTypes[lineNum], source: [line] })
             }
             lastType = lineTypes[lineNum]
         })
@@ -97,9 +97,24 @@ const formatResult = math.typed({
     'Help': result => `<pre>${math.format(result)}</pre>`,
     'any': math.typed.referTo(
         'number',
-        fnumber => result => katex.renderToString(math.parse(fnumber(result)).toTex())
+        fnumber => result => {
+            if (result.isUnit) {
+                let rString = result.toString()
+                if (rString.includes('/')) {
+                    let rJSON = result.toJSON()
+                    return katex.renderToString(
+                        `${parseToTex(fnumber(rJSON.value).toString())}\ ${parseToTex(rJSON.unit)}`)
+                }
+            }
+            return katex.renderToString(parseToTex(fnumber(result)))
+        }
     )
 })
+
+
+function parseToTex(expression) {
+    return math.parse(expression).toTex()
+}
 
 /**
  * Processes an array of expressions by evaluating them, formatting the results,
