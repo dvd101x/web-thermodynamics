@@ -9,12 +9,14 @@
   <body>
     <main x-data="app">
       <div id="editor" @doc-changed.camel.debounce="calcExpressions"
-      @selection-changed.camel="getCurrentLine"
+      @selection-changed.camel="getSelection"
       ></div>
       <article id="output" class="markdown-body">
         <template x-for="expression in expressions">
           <div class="results"
-            :class=" (currentLine >= expression.from) && (currentLine <= expression.to) ? 'highligted' : ''"
+            :class="
+            ((expression.from >= currentLineFrom) && (expression.from <= currentLineTo) ||
+             (expression.to >= currentLineFrom) && (expression.to <= currentLineTo)) ? 'highligted' : ''"
             x-html="expression.outputs" x-show="expression.visible"
             x-effect="if((currentLine >= expression.from) && (currentLine <= expression.to)) $el.scrollIntoView({ block: 'nearest', inline: 'start'})">
         </div>

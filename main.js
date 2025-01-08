@@ -75,11 +75,15 @@ Alpine.data(
     get calcExpressions() {
       this.expressions = makeDoc(editor.state.doc.toString())
     },
-    get getCurrentLine() {
-      this.currentLine = editor.state.doc.lineAt(
+    get getSelection() {
+      this.currentLineFrom = editor.state.doc.lineAt(
         editor.state.selection.ranges[editor.state.selection.mainIndex].from
       ).number - 1
-    }
+      this.currentLineTo = editor.state.doc.lineAt(
+        editor.state.selection.ranges[editor.state.selection.mainIndex].to
+      ).number - 1 
+    },
+
   })
 )
 
