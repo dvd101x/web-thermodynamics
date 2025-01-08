@@ -17,10 +17,9 @@
         <template x-for="expression in expressions">
           <div class="results"
             :class="
-            ((expression.from >= currentLineFrom) && (expression.from <= currentLineTo) ||
-             (expression.to >= currentLineFrom) && (expression.to <= currentLineTo)) ? 'highligted' : ''"
+            ((expression.from <= currentLineTo) && (expression.to >= currentLineFrom)) ? 'highligted' : ''"
             x-html="expression.outputs" x-show="expression.visible"
-            x-effect="if((currentLine >= expression.from) && (currentLine <= expression.to)) $el.scrollIntoView({ block: 'nearest', inline: 'start'})">
+            x-effect="if((expression.from <= currentLineTo) && (expression.to >= currentLineFrom)) $el.scrollIntoView({ block: 'nearest', inline: 'start'})">
         </div>
         </template>
       </article>
