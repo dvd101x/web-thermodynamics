@@ -2,8 +2,9 @@
 
 This is an example of how to run CoolProp Javascript wrapper with units handled by mathjs, including a code editor.
 
-[![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/
-)
+Click on this image to open the tool in your browser.
+
+[![interface](interface.png)](https://dvd101x.github.io/web-thermodynamics/)
 
 # Getting started
 
@@ -38,12 +39,6 @@ It loads with three example expressions for each of the CoolProp functions avail
   ```
 
 On this example we mix the outputs with **markdown** and equations with **latex** if we start the comment with a `# ` this is a nice way to make present the results including some input markdown.
-
-# Getting started
-
-Open this link:
-
-https://dvd101x.github.io/web-thermodynamics/
 
 # How does it work
 
