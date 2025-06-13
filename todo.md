@@ -1,5 +1,6 @@
 
 # To-Do
+- [ ] Update syntax to cloesly resemble ["the light format"](https://jupytext.readthedocs.io/en/latest/formats-scripts.html#the-light-format)
 - [ ] Plots
 - [ ] Migrate the language definition to CM6
   - [ ] Dynamic autocomplete
