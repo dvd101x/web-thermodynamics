@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Web thermodynamics</title>
-    <script src="/coolprop.js"></script>
   </head>
+  <script src="/loadCoolprop.js" type="module"></script>
   <body>
     <main x-data="app">
       <div id="editor" @doc-changed.camel.debounce="calcExpressions"

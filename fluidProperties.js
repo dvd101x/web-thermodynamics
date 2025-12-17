@@ -274,7 +274,7 @@ export function props(desiredProperty, fluidName, fluidProperties) {
     value = [0, 0]
   }
 
-  const calcValue = Module.PropsSI(desiredProperty,
+  const calcValue = coolprop.PropsSI(desiredProperty,
     prop[0], value[0],
     prop[1], value[1],
     fluidName)
@@ -298,7 +298,7 @@ export function HAprops(calcProp, fluidProperties) {
   toValue(arrayProperties[1][1], units[1]),
   toValue(arrayProperties[2][1], units[2])]
 
-  const calcValue = Module.HAPropsSI(calcProp,
+  const calcValue = coolprop.HAPropsSI(calcProp,
     prop[0], value[0],
     prop[1], value[1],
     prop[2], value[2])

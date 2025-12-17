@@ -72,6 +72,8 @@ Alpine.data(
   () => ({
     expressions: makeDoc("# # Type and get results - just like that!"),
     currentLine: 1,
+    currentLineFrom: 1,
+    currentLineTo: 1,
     get calcExpressions() {
       this.expressions = makeDoc(editor.state.doc.toString())
     },

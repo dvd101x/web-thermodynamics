@@ -6,6 +6,8 @@
   - [ ] Dynamic autocomplete
 - [ ] More efficient math evaluation (only update state when inputs change)
 - [ ] Evaluate expression by expression (not necessarly block by block)
+- [ ] Evaluate expressions with a DAG
+- [ ] Solve epxressions
 
 # Maybe
 - [ ] Saves state
