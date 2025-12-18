@@ -34,7 +34,7 @@ main {
 
 #editor {
   flex: 1;
-  overflow-y: scroll;
+  overflow: hidden;
   display: flex;
 }
 
